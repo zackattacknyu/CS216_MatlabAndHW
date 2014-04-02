@@ -22,3 +22,19 @@ averageGrayscaleImage = totalGrayscaleImage./numImages;
 
 imwrite(averageColorImage,'set1color.jpg','JPEG');
 imwrite(averageGrayscaleImage,'set1grayscale.jpg','JPEG');
+
+%compute standard deviation
+totalVariance = zeros(size(grayscaleImages{1}));
+for i = 1:numImages
+    totalVariance = totalVariance + (grayscaleImages{i}-averageGrayscaleImage).^2;
+end
+totalVariance = totalVariance./numImages;
+stndDevMatrix = sqrt(totalVariance);
+
+imagesc(stndDevMatrix);
+axis image;
+
+minStndDev = min(stndDevMatrix(:));
+maxStndDev = max(stndDevMatrix(:));
+scaledStndDevMatrix = (stndDevMatrix-minStndDev)./(maxStndDev-minStndDev);
+imwrite(scaledStndDevMatrix,'set1grayscaleStndDev.jpg','JPEG');
