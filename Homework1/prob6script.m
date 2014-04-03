@@ -1,9 +1,12 @@
-set1list = dir('imageSet/set1/*.jpg');
+setname = 'set1';
+dirname = strcat('imageSet/',setname,'/*.jpg');
+set1list = dir(dirname);
 numImages = length(set1list);
 colorImages = cell(1,numImages);
 grayscaleImages = cell(1,numImages);
+imnameStart = strcat('imageSet/',setname,'/');
 for i=1:numImages
-   imname = ['imageSet/set1/' set1list(i).name];
+   imname = [imnameStart set1list(i).name];
    currentColorImage = imread(imname);
    currentGrayscaleImage = rgb2gray(currentColorImage);
    colorImages{i} = im2double(currentColorImage);
@@ -20,8 +23,10 @@ end
 averageColorImage = totalColorImage./numImages;
 averageGrayscaleImage = totalGrayscaleImage./numImages;
 
-imwrite(averageColorImage,'set1color.jpg','JPEG');
-imwrite(averageGrayscaleImage,'set1grayscale.jpg','JPEG');
+colorImageName = strcat(setname,'color.jpg');
+grayscaleImageName = strcat(setname,'grayscale.jpg');
+imwrite(averageColorImage,colorImageName,'JPEG');
+imwrite(averageGrayscaleImage,grayscaleImageName,'JPEG');
 
 %compute standard deviation
 totalVariance = zeros(size(grayscaleImages{1}));
@@ -37,4 +42,5 @@ axis image;
 minStndDev = min(stndDevMatrix(:));
 maxStndDev = max(stndDevMatrix(:));
 scaledStndDevMatrix = (stndDevMatrix-minStndDev)./(maxStndDev-minStndDev);
-imwrite(scaledStndDevMatrix,'set1grayscaleStndDev.jpg','JPEG');
+stndDevImageName = strcat(setname,'grayscaleStndDev.jpg');
+imwrite(scaledStndDevMatrix,stndDevImageName,'JPEG');
