@@ -1,6 +1,5 @@
 function [] = writeAverageGrayscaleImage( dirname, fileformat, outputImageName )
-%WRITEAVERAGEGRAYSCALEIMAGE This writes the average grayscale and color
-%                           images
+%WRITEAVERAGEGRAYSCALEIMAGE This writes and displays the average grayscale image
 %   Input
 %       dirname: name of directory to search
 %       fileformat: file format string for images to put into set
@@ -10,6 +9,10 @@ function [] = writeAverageGrayscaleImage( dirname, fileformat, outputImageName )
 [~, grayscaleImages] = getImageSetData(dirname,fileformat);
 averageGrayscaleImage = mean(grayscaleImages,3);
 imwrite(averageGrayscaleImage,outputImageName,'JPEG');
+
+figure
+imagesc(averageGrayscaleImage);
+axis image;
 
 end
 
