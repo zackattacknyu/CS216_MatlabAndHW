@@ -1,39 +1,17 @@
-setname = 'set2';
-dirname = strcat('imageSet/',setname,'/*.jpg');
-set1list = dir(dirname);
-numImages = length(set1list);
-imnameStart = strcat('imageSet/',setname,'/');
+setname = 'set1';
+dirname = strcat('imageSet/',setname);
+fileformat = '/*.jpg';
 
-%get info on first image
-firstColorImage = imread([imnameStart set1list(1).name]);
-firstGrayscaleImage = rgb2gray(firstColorImage);
-colorImages = zeros([size(firstColorImage) numImages]);
-grayscaleImages = zeros([size(firstGrayscaleImage) numImages]);
-
-for i=1:numImages
-   imname = [imnameStart set1list(i).name];
-   currentColorImage = imread(imname);
-   currentGrayscaleImage = rgb2gray(currentColorImage);
-   colorImages(:,:,:,i) = im2double(currentColorImage);
-   grayscaleImages(:,:,i) = im2double(currentGrayscaleImage);
-end
-
-totalColorImage = sum(colorImages,4);
-totalGrayscaleImage = sum(grayscaleImages,3);
-averageColorImage = totalColorImage./numImages;
-averageGrayscaleImage = totalGrayscaleImage./numImages;
+[colorImages, grayscaleImages] = getImageSetData(dirname,fileformat);
 
 colorImageName = strcat(setname,'color.jpg');
 grayscaleImageName = strcat(setname,'grayscale.jpg');
-imwrite(averageColorImage,colorImageName,'JPEG');
-imwrite(averageGrayscaleImage,grayscaleImageName,'JPEG');
+
+writeAverageGrayscaleImage(dirname,fileformat,grayscaleImageName);
+writeAverageColorImage(dirname,fileformat,colorImageName);
 
 %compute standard deviation
-averageRepeated = repmat(averageGrayscaleImage,[1 1 numImages]);
-squaredDifferences = (grayscaleImages-averageRepeated).^2;
-totalVariance = sum(squaredDifferences,3);
-meanSquaredError = totalVariance./numImages;
-stndDevMatrix = sqrt(meanSquaredError);
+stndDevMatrix = std(grayscaleImages,1,3);
 
 imagesc(stndDevMatrix);
 axis image;
