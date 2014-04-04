@@ -1,4 +1,4 @@
-setname = 'set1';
+setname = 'set2';
 dirname = strcat('imageSet/',setname,'/*.jpg');
 set1list = dir(dirname);
 numImages = length(set1list);
