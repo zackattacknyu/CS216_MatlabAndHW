@@ -305,6 +305,202 @@ numUnique = sizeUniqueV(2);
 
 \end{verbatim}
 
+\section*{Problem 6}
+
+\subsection*{Helper method for getting image data}
+
+The following function is used by the rest of the functions to get image data:
+
+\begin{verbatim}
+
+function [ colorImages, grayscaleImages ] = getImageSetData( dirname, fileformat )
+%GETIMAGESETDATA This gets the multi-dimensional array of color image data
+%                and grayscale image data. All images must be same size
+%   Input
+%       dirname: name of directory to search
+%       fileformat: file format string for images to put into set
+%   Output
+%       colorImages: color data array
+%       grayscaleImages: grayscale data array
+
+dirString = strcat(dirname,fileformat);
+setList = dir(dirString);
+numImages = length(setList);
+imnameStart = strcat(dirname,'/');
+
+%get info on first image
+firstColorImage = imread([imnameStart setList(1).name]);
+firstGrayscaleImage = rgb2gray(firstColorImage);
+colorImages = zeros([size(firstColorImage) numImages]);
+grayscaleImages = zeros([size(firstGrayscaleImage) numImages]);
+
+for i=1:numImages
+   imname = [imnameStart setList(i).name];
+   currentColorImage = imread(imname);
+   currentGrayscaleImage = rgb2gray(currentColorImage);
+   colorImages(:,:,:,i) = im2double(currentColorImage);
+   grayscaleImages(:,:,i) = im2double(currentGrayscaleImage);
+end
+
+end
+
+\end{verbatim}
+
+\subsection*{Part A and D, Average Grayscale Image}
+
+The following function writes and displays the average grayscale image:
+
+\begin{verbatim}
+
+function [] = writeAverageGrayscaleImage( dirname, fileformat, outputImageName )
+%WRITEAVERAGEGRAYSCALEIMAGE This writes and displays the average grayscale image
+%   Input
+%       dirname: name of directory to search
+%       fileformat: file format string for images to put into set
+%       outputImageName: name to use when writing output file
+
+
+[~, grayscaleImages] = getImageSetData(dirname,fileformat);
+averageGrayscaleImage = mean(grayscaleImages,3);
+imwrite(averageGrayscaleImage,outputImageName,'JPEG');
+
+figure
+imagesc(averageGrayscaleImage);
+axis image;
+
+end
+
+\end{verbatim}
+
+\subsection*{Part B and D, Average Color Image}
+
+The following function computes, writes, and displays the average color image:
+
+\begin{verbatim}
+
+function [] = writeAverageColorImage( dirname, fileformat, outputImageName )
+%WRITEAVERAGEGRAYSCALEIMAGE This writes and displays the average color image
+%
+%   Input
+%       dirname: name of directory to search
+%       fileformat: file format string for images to put into set
+%       outputImageName: name to use when writing output file
+
+
+[colorImages, ~] = getImageSetData(dirname,fileformat);
+averageColorImage = mean(colorImages,4);
+imwrite(averageColorImage,outputImageName,'JPEG');
+
+figure
+image(averageColorImage);
+axis image;
+
+end
+
+\end{verbatim}
+
+\subsection*{Part C and D, Standard Deviation Image}
+
+The following function computes and writes the standard deviation of the grayscale image data. 
+
+\begin{verbatim}
+
+function [] = writeStndDevImage( dirname, fileformat, outputImageName )
+%WRITESTNDDEVIMAGE This writes and displays the standard deviation image
+%
+%   Input
+%       dirname: name of directory to search
+%       fileformat: file format string for images to put into set
+%       outputImageName: name to use when writing output file
+
+
+[~, grayscaleImages] = getImageSetData(dirname,fileformat);
+
+%compute standard deviation
+stndDevMatrix = std(grayscaleImages,1,3);
+
+figure
+imagesc(stndDevMatrix);
+axis image;
+
+minStndDev = min(stndDevMatrix(:));
+maxStndDev = max(stndDevMatrix(:));
+scaledStndDevMatrix = (stndDevMatrix-minStndDev)./(maxStndDev-minStndDev);
+imwrite(scaledStndDevMatrix,outputImageName,'JPEG');
+
+end
+
+\end{verbatim}
+
+\subsection*{Problem 6 script}
+
+This is the script used to writes all the images for problem 6
+
+\begin{verbatim}
+
+setname = 'set2';
+dirname = strcat('imageSet/',setname);
+fileformat = '/*.jpg';
+
+colorImageName = strcat(setname,'color.jpg');
+grayscaleImageName = strcat(setname,'grayscale.jpg');
+stndDevImageName = strcat(setname,'grayscaleStndDev.jpg');
+
+writeAverageGrayscaleImage(dirname,fileformat,grayscaleImageName);
+writeAverageColorImage(dirname,fileformat,colorImageName);
+writeStndDevImage(dirname,fileformat,stndDevImageName);
+
+\end{verbatim}
+
+\subsection*{set1 results}
+
+Here are the images that resulting from running the script where the setname variable was set to $set1$. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{set1grayscale.jpg}
+\caption{Part A, average grayscale image}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{set1color.jpg}
+\caption{Part B, average color image}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{set1grayscaleStndDev.jpg}
+\caption{Part C, standard deviation image}
+\end{figure}
+
+\subsection*{set2 results}
+
+Here are the images that resulting from running the script where the setname variable was set to $set2$. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{set2grayscale.jpg}
+\caption{Part A, average grayscale image}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{set2color.jpg}
+\caption{Part B, average color image}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{set2grayscaleStndDev.jpg}
+\caption{Part C, standard deviation image}
+\end{figure}
+
+\subsection*{Explanation of Results}
+
+The image set $set1$ is images of sailing ships and they all look relatively similar. Therefore, the average color image and the average grayscale image looks like a sailing ship. You can definitely notice the shape of a sailing ship in the average image. In the color image it is easier to notice this due to the fact that there is more detail. The standard deviation image is darker in the background and lighter where the ship is meant to be. This could suggest that the background is often sky so it does not vary as much thus more of the varation is in the shape of the ship. 
+
+The image set $set2$ is images of planes but there is considerable variation in background as well as type of plane. Therefore, the average color image looks vaguely like a plane but the grayscale image does not look nearly as much like a plane. The standard deviation image does not look much like a plane due to the fact that the foreground and background varies considerably between images. 
 
 \end{document}
 
