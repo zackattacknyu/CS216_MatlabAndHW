@@ -1,4 +1,4 @@
-setname = 'set2';
+setname = 'set1';
 dirname = strcat('imageSet/',setname);
 fileformat = '/*.jpg';
 

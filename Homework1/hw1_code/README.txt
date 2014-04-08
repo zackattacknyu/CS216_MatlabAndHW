@@ -21,3 +21,18 @@ writeAverageColorImage.m: function that writes and displays the average color im
 writeAverageGrayscaleImage.m: function that writes and displays the average grayscale image for a set
 
 writeStndDevImage.m: function that computes, writes, and displays the standard deviation of the grayscale values
+
+
+
+
+Step to Reproduce the PDF:
+
+1. Go to the folder in Matlab
+2. Run prob5script
+3. Save the part A plot of intensity values that appears as "prob5partAplot.jpg"
+4. Save the part B histogram plot as "prob5partBplot.jpg"
+5. Run prob6script
+6. Save the color bar plot of standard deviation as "set1grayscaleStndDev_colorbar.jpg"
+7. Edit prob6script.m and change the first line so that setname = 'set2'
+8. Repeat step 5-6 but save the file as "set2grayscaleStndDev_colorbar.jpg"
+9. Open up "CS216_hw1solution.tex" in a LaTeX editor and compile the PDF
