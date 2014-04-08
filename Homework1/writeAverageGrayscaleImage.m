@@ -11,7 +11,7 @@ averageGrayscaleImage = mean(grayscaleImages,3);
 imwrite(averageGrayscaleImage,outputImageName,'JPEG');
 
 figure
-imagesc(averageGrayscaleImage);
+imshow(averageGrayscaleImage);
 axis image;
 
 end

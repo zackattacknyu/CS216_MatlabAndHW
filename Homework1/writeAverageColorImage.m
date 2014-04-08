@@ -12,7 +12,7 @@ averageColorImage = mean(colorImages,4);
 imwrite(averageColorImage,outputImageName,'JPEG');
 
 figure
-image(averageColorImage);
+imshow(averageColorImage);
 axis image;
 
 end

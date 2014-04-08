@@ -33,7 +33,7 @@
 
 \title{CS 216 Homework 1}
 \author{Zachary DeStefano, 15247592}
-\date{Due Date: April 9}
+\date{Due Date: April 9, 2014}
 
 \maketitle
 
@@ -43,23 +43,29 @@
 
 \subsection*{Problem 4a}
 
-The variable $x$ will be assigned to an array that is the numbers 1 through 5 arranged in a random order. 
+The variable $x$ will be assigned to a single row vector that is the numbers 1 through 5 arranged in a random order. Example is $x = [3,5,1,2,4]$.
 
 \subsection*{Problem 4b}
 
-The variable $a$ will be assigned to an array that is the numbers 1 through 10 arranged in chronological order. The variable $b$ will end up being assigned an array that is the numbers $1,4,7,10$ because it is the first number and then every third number after that. 
+The variable $a$ will be assigned to a single row vector that is the numbers 1 through 10 arranged in chronological order. The variable $b$ will end up being assigned a row vector that is the numbers $1,4,7,10$ because it is the first number and then every third number after that. More precisely,
+\[
+a = [1,2,3,4,5,6,7,8,9,10]
+\]
+\[
+b = [1,4,7,10]
+\]
 
 \subsection*{Problem 4c}
 
-The variable $f$ will be assigned to an array that is the numbers 1501 to 2000 in chronological order. The variable $g$ will be assigned to the indices of $f$ where the entries are greater than $1850$ which is $351$ to $500$. The variable $h$ will then be assigned an array that is the numbers $1851$ to $2000$.  
+The variable $f$ will be assigned to a row vector that is the numbers 1501 to 2000 in chronological order. The variable $g$ will be assigned to the indices of $f$ where the entries are greater than $1850$ which is $351$ to $500$. The variable $h$ will then be assigned a row vector that is the numbers $1851$ to $2000$.  
 
 \subsection*{Problem 4d}
 
-The variables $x$ will be assigned to a vector of 10 entries where each entry has value 22. The variable $y$ will be assigned the sum of the entries which will be 220.
+The variables $x$ will be assigned to a row vector of 10 entries where each entry has value 22. The variable $y$ will be assigned the sum of the entries of $x$ which will be 220.
 
 \subsection*{Problem 4e}
 
-The variable $a$ will be assigned an array that is the numbers 1 to 1000 in chronological order. The variable $b$ will be assigned a vector that is the numbers 1 to 1000 in reverse order. 
+The variable $a$ will be assigned a row vector that is the numbers 1 to 1000 in chronological order. The variable $b$ will be assigned a row vector that is the numbers 1 to 1000 in reverse order. 
 
 %\begin{figure}[H]
 %\centering
@@ -101,7 +107,7 @@ imwrite(A,'blackWhiteImage.jpg','JPEG');
 
 \begin{figure}[H]
 \centering
-\includegraphics[height=2in]{prob5partAplot.jpg}
+\includegraphics[height=4in]{prob5partAplot.jpg}
 \caption{Plot of Intensity Values}
 \end{figure}
 
@@ -123,7 +129,7 @@ title('Problem 5, Part A plot of sorted intensity values');
 
 \begin{figure}[H]
 \centering
-\includegraphics[height=2in]{prob5partBplot.jpg}
+\includegraphics[height=4in]{prob5partBplot.jpg}
 \caption{Histogram of Intensities with 32 bins}
 \end{figure}
 
@@ -144,14 +150,14 @@ title('Problem 5, Part B histogram of intensities');
 \begin{figure}[H]
 \centering
 \includegraphics[height=1in]{partCimage.jpg}
-\caption{Binary Image using 0.65 as the threshold}
+\caption{Binary Image}
 \end{figure}
 
 Here is the code used to get the image:
 
 \begin{verbatim}
 
-threshold = 0.65;
+threshold = median(singleVectorA);
 binaryA = zeros(size(A));
 binaryA(A > threshold) = 1;
 imwrite(binaryA,'partCimage.jpg','JPEG');
@@ -270,7 +276,7 @@ ylabel('Number of Occurances');
 title('Problem 5, Part B histogram of intensities');
 
 %Part C
-threshold = 0.65;
+threshold = median(singleVectorA);
 binaryA = zeros(size(A));
 binaryA(A > threshold) = 1;
 imwrite(binaryA,'partCimage.jpg','JPEG');
@@ -304,6 +310,8 @@ sizeUniqueV = size(unique(v));
 numUnique = sizeUniqueV(2);
 
 \end{verbatim}
+
+\newpage
 
 \section*{Problem 6}
 
@@ -365,7 +373,7 @@ averageGrayscaleImage = mean(grayscaleImages,3);
 imwrite(averageGrayscaleImage,outputImageName,'JPEG');
 
 figure
-imagesc(averageGrayscaleImage);
+imshow(averageGrayscaleImage);
 axis image;
 
 end
@@ -392,7 +400,7 @@ averageColorImage = mean(colorImages,4);
 imwrite(averageColorImage,outputImageName,'JPEG');
 
 figure
-image(averageColorImage);
+imshow(averageColorImage);
 axis image;
 
 end
@@ -422,6 +430,7 @@ stndDevMatrix = std(grayscaleImages,1,3);
 figure
 imagesc(stndDevMatrix);
 axis image;
+colorbar;
 
 minStndDev = min(stndDevMatrix(:));
 maxStndDev = max(stndDevMatrix(:));
@@ -474,6 +483,12 @@ Here are the images that resulting from running the script where the setname var
 \caption{Part C, standard deviation image}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{set1grayscaleStndDev_colorbar.jpg}
+\caption{Part C, standard deviation image with color bar}
+\end{figure}
+
 \subsection*{set2 results}
 
 Here are the images that resulting from running the script where the setname variable was set to $set2$. 
@@ -496,11 +511,17 @@ Here are the images that resulting from running the script where the setname var
 \caption{Part C, standard deviation image}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{set2grayscaleStndDev_colorbar.jpg}
+\caption{Part C, standard deviation image with color bar}
+\end{figure}
+
 \subsection*{Explanation of Results}
 
 The image set $set1$ is images of sailing ships and they all look relatively similar. Therefore, the average color image and the average grayscale image looks like a sailing ship. You can definitely notice the shape of a sailing ship in the average image. In the color image it is easier to notice this due to the fact that there is more detail. The standard deviation image is darker in the background and lighter where the ship is meant to be. This could suggest that the background is often sky so it does not vary as much thus more of the varation is in the shape of the ship. 
 
-The image set $set2$ is images of planes but there is considerable variation in background as well as type of plane. Therefore, the average color image looks vaguely like a plane but the grayscale image does not look nearly as much like a plane. The standard deviation image does not look much like a plane due to the fact that the foreground and background varies considerably between images. 
+The image set $set2$ is images of planes but there is considerable variation in background as well as type of plane. Therefore, the average color image looks vaguely like a plane but the grayscale image does not look nearly as much like a plane. Due to the variation in both the background as well as the foreground, which are the planes, the standard deviation image does not look like a plane at all. The planes do tend to be in the center of the image, so there is more variance there as opposed to the edges which have less variance. This can be observed in the standard deviation image. 
 
 \end{document}
 

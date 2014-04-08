@@ -19,7 +19,7 @@ ylabel('Number of Occurances');
 title('Problem 5, Part B histogram of intensities');
 
 %Part C
-threshold = 0.65;
+threshold = median(singleVectorA);
 binaryA = zeros(size(A));
 binaryA(A > threshold) = 1;
 imwrite(binaryA,'partCimage.jpg','JPEG');

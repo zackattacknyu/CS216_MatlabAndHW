@@ -15,6 +15,7 @@ stndDevMatrix = std(grayscaleImages,1,3);
 figure
 imagesc(stndDevMatrix);
 axis image;
+colorbar;
 
 minStndDev = min(stndDevMatrix(:));
 maxStndDev = max(stndDevMatrix(:));
