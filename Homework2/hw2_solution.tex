@@ -1,0 +1,112 @@
+\documentclass[11pt,psfig]{article}
+\usepackage{epsfig}
+\usepackage{times}
+\usepackage{amssymb}
+\usepackage{float}
+
+\newcount\refno\refno=1
+\def\ref{\the\refno \global\advance\refno by 1}
+\def\ux{\underline{x}}
+\def\uw{\underline{w}}
+\def\bw{\underline{w}}
+\def\ut{\underline{\theta}}
+\def\umu{\underline{\mu}} 
+\def\bmu{\underline{\mu}} 
+\def\be{p_e^*}
+\newcount\eqnumber\eqnumber=1
+\def\eq{\the \eqnumber \global\advance\eqnumber by 1}
+\def\eqs{\eq}
+\def\eqn{\eqno(\eq)}
+
+ \pagestyle{empty}
+\def\baselinestretch{1.1}
+\topmargin1in \headsep0.3in
+\topmargin0in \oddsidemargin0in \textwidth6.5in \textheight8.5in
+\begin{document}
+\setlength{\parskip}{1.2ex plus0.3ex minus 0.3ex}
+
+
+\thispagestyle{empty} \pagestyle{myheadings} \markright{Homework
+\#: CS 216, Image Understanding: Spring 2014}
+
+
+
+\title{CS 216 Homework 2}
+\author{Zachary DeStefano, 15247592}
+\date{Due Date: April 25, 2014}
+
+\maketitle
+
+\vfill\eject
+
+\newpage
+
+\section*{Problem 1}
+
+We will prove that $(f*g)*h=f*(g*h)$. First off, let $x=f*g$ and let $y=g*h$. \\
+\[
+x(t) = (f*g)(t) = \sum_{s=-\infty}^{\infty} f(t-s)g(s)
+\]
+\[
+y(t) = (g*h)(t) = \sum_{s=-\infty}^{\infty} g(s)h(t-s)
+\]
+This means that
+\[
+(x*h)(t) = \sum_{v=-\infty}^{\infty} x(v)h(t-v) = \sum_{v=-\infty}^{\infty} \sum_{s=-\infty}^{\infty} f(v-s)g(s)h(t-v)
+\]
+Similarly
+\[
+(f*y)(t) = \sum_{v=-\infty}^{\infty} f(t-v)y(v) = \sum_{v=-\infty}^{\infty} \sum_{s=-\infty}^{\infty} f(t-v)g(s)h(v-s)
+\]
+After a change of variables (TODO: More detail), the two sides are equal. 
+
+\section*{Problem 2}
+
+We will prove that $(f*g)*h \neq f*(g*h)$ if * is correlation. First off, let $x=f*g$ and let $y=g*h$. \\
+\[
+x(t) = (f*g)(t) = \sum_{s=-\infty}^{\infty} f(t+s)g(s)
+\]
+\[
+y(t) = (g*h)(t) = \sum_{s=-\infty}^{\infty} g(s)h(t+s)
+\]
+This means that
+\[
+(x*h)(t) = \sum_{v=-\infty}^{\infty} x(v)h(t+v) = \sum_{v=-\infty}^{\infty} \sum_{s=-\infty}^{\infty} f(v+s)g(s)h(t+v)
+\]
+Similarly
+\[
+(f*y)(t) = \sum_{v=-\infty}^{\infty} f(t+v)y(v) = \sum_{v=-\infty}^{\infty} \sum_{s=-\infty}^{\infty} f(t+v)g(s)h(v+s)
+\]
+After a change of variables (TODO: More detail), the two sides are definitely not equal. 
+
+\section*{Problem 3}
+
+Let $g_1(x) = g_2(y) = N(0,\sigma^2)$. Then
+\[
+g_1(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{x^2}{2\sigma^2}}
+\]
+\[
+g_2(y) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{y^2}{2\sigma^2}}
+\]
+This means that
+\[
+g_1(x)g_2(y) = \frac{1}{2\pi \sigma^2} e^{-\frac{x^2 + y^2}{2\sigma^2}}
+\]
+This allows us to say that $g(x,y) = g_1(x)g_2(y)$
+
+%\begin{figure}[H]
+%\centering
+%\includegraphics[height=4in]{prob1plot.jpg}
+%\caption{Probability of Class Labels with decision boundaries marked}
+%\end{figure}
+
+
+\end{document}
+
+
+
+
+
+
+
+
