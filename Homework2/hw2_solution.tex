@@ -113,7 +113,50 @@ Step 3 will take $max(HW,MN)$ time. The identity of the max will not matter in t
 Step 4 will take $max(HW,MN) log( max(HW, MN) )$ time. Again which one is the max does not matter because of step 1 and 2. \\
 \\
 The total running time is thus $O(MN \cdot log(MN) + HW \cdot log(HW) )$ time. \\
-Assuming that $HW$ is the max, the running time is $O(HW \cdot log(HW))$. 
+Assuming that $HW$ is the max, the running time is $O(HW \cdot log(HW))$. \\
+\\
+If the filter is $f(x,y) = f(x)g(y)$ then we could do the following:\\
+1. Compute the horizontal filter\\
+2. Compute the vertical filter\\
+3. Do point wise multiplication \\
+\\
+Step 1 will take $HWM$ time and step 2 will be $HWN$ time. \\
+Step 3 will be $HW$ time. \\
+Total running time is thus $O( HW(M+N) )$ time. \\
+TODO: Improve the algorithm and its analysis for the case of a filter being that product. 
+
+\section*{Problem 5}
+
+Our two gaussians are as follows
+\[
+g_1(t) = \frac{1}{\sqrt{2\pi \sigma_1^2}} e^{-\frac{t^2}{2\sigma_1^2}}
+\]
+\[
+g_2(t) = \frac{1}{\sqrt{2\pi \sigma_2^2}} e^{-\frac{t^2}{2\sigma_2^2}}
+\]
+The convolution formula we will use is the following
+\[
+g_3(t) = \int_{-\infty}^{\infty}{g_1(s)g_2(t-s) \, ds}
+\]
+\\
+Page 6 of this paper has a good explanation
+\begin{verbatim}
+http://www.tina-vision.net/docs/memos/2003-003.pdf
+\end{verbatim}
+Let $F_1$ be the Fourier transform for $g_1$ and $F_2$ be the transform for $g_2$.\\
+\[
+F_1(t) = \int_{-\infty}^{\infty}{g_1(s) e^{-2\pi i s t} \, ds}
+\]
+\[
+F_2(t) = \int_{-\infty}^{\infty}{g_2(s) e^{-2\pi i s t} \, ds}
+\]
+Expanding we have
+\[
+F_1(t) = \frac{1}{\sqrt{2 \pi \sigma_1^2}} \int_{-\infty}^{\infty}{e^{-\frac{s^2}{2\sigma_1^2}} e^{-2\pi i s t} \, ds}
+\]
+\[
+F_1(t) = \frac{1}{\sqrt{2 \pi \sigma_2^2}} \int_{-\infty}^{\infty}{e^{-\frac{s^2}{2\sigma_2^2}} e^{-2\pi i s t} \, ds}
+\]
 
 %\begin{figure}[H]
 %\centering
