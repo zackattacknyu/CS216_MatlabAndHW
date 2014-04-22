@@ -30,3 +30,14 @@ plot(signalDFTmag_10);
 xlabel('Index');
 ylabel('Magnitude of Spectrum');
 title('Frequency Spectrum Magnitude with 10 sample impulse');
+
+%Gaussian function frequency plots
+figure
+gaussFunc_X = -50:1:50;
+sigma = 2;
+gaussFunc_Y = (1/(sigma*sqrt(2*pi)))*exp(-gaussFunc_X.^2/(2*sigma^2));
+gaussFunc_freq = abs(fft(gaussFunc_Y));
+plot(gaussFunc_freq);
+xlabel('Index');
+ylabel('Magnitude of Spectrum');
+title('Frequency Spectrum Magnitude of Gaussian function. sigma=2');
