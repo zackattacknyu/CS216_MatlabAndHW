@@ -1,3 +1,4 @@
+%does the operations for the first image
 picname = 'zebraMod.jpg';
 imageData = rgb2gray(imread(picname));
 bwPicName = strcat('bw_',picname);
@@ -16,6 +17,7 @@ imagesc(phaseSpectrumImage);
 title(strcat('Phase Spectrum Image: ',picname));
 colorbar;
 
+%does the operations for the second image
 pic2name = 'simpsons.jpg';
 image2Data = rgb2gray(imread(pic2name));
 bwPic2Name = strcat('bw_',pic2name);
@@ -33,3 +35,8 @@ figure
 imagesc(phaseSpectrumImage2);
 title(strcat('Phase Spectrum Image: ',pic2name));
 colorbar;
+
+%combine magnitude and phase
+newFFTimage = magSpectrumImage.*exp(phaseSpectrumImage2.*1i);
+newImage = ifft2(newFFTimage);
+imwrite(newImage,'mag_zebra_phase_simpsons.jpg','JPEG');
