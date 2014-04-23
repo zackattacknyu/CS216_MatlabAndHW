@@ -23,6 +23,16 @@ correlation = xcorr2(imageData,nLetterImageData);
 imagesc(correlation);
 colorbar;
 
+%does the thresholding
+%this is the 1-D example. It needs to be extended to 2D
+threshold = mean(correlation(:));
+L = (correlation(2:end-1) > correlation(1:end-2));
+R = (correlation(2:end-1) > correlation(3:end));
+T = (correlation(2:end-1) > threshold);
+maxima = R & L & T;
+
+
+
 %values for the other "N" letter
 rightX = 334;
 leftX = 323;
