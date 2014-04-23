@@ -1,6 +1,6 @@
 %does the operations for the first image
 picname = 'zebraMod.jpg';
-imageData = rgb2gray(imread(picname));
+imageData = im2double(rgb2gray(imread(picname)));
 bwPicName = strcat('bw_',picname);
 imwrite(imageData,bwPicName,'JPEG');
 imageFFT = fft2(imageData);
@@ -19,7 +19,7 @@ colorbar;
 
 %does the operations for the second image
 pic2name = 'simpsons.jpg';
-image2Data = rgb2gray(imread(pic2name));
+image2Data = im2double(rgb2gray(imread(pic2name)));
 bwPic2Name = strcat('bw_',pic2name);
 imwrite(image2Data,bwPic2Name,'JPEG');
 image2FFT = fft2(image2Data);
