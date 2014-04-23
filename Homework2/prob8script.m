@@ -3,8 +3,8 @@ imageName = 'dilbert1.jpg';
 %for dilbert, it is already BW, so no need to call rgb2gray
 imageData = im2double(imread(imageName));
 
-figure
-imshow(imageData)
+%figure
+%imshow(imageData)
 
 %used to get the corner values of the square we care about 
 %[xVals,yVals] = ginput(4)
@@ -17,6 +17,11 @@ topY = 82;
 
 nLetterImageData = imageData(bottomY:topY,leftX:rightX);
 imwrite(nLetterImageData,'nLetter1_dilbert1.jpg','JPEG');
+
+correlation = xcorr2(imageData,nLetterImageData);
+%correlation = xcorr2(nLetterImageData,imageData);
+imagesc(correlation);
+colorbar;
 
 %values for the other "N" letter
 rightX = 334;
