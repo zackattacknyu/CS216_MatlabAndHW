@@ -13,13 +13,7 @@ imagesc(filteredImageData);
 colorbar
 title('Filtered Image');
 
-derivImageData = imageData-filteredImageData;
-figure
-imagesc(derivImageData);
-colorbar
-title('Laplacian Image');
-
-horizDerivFilter = [-1 0 1];
+horizDerivFilter = [1 -1];
 horizDerivImage = conv2(filteredImageData,horizDerivFilter,'same');
 figure
 imagesc(horizDerivImage);
