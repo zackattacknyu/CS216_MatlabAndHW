@@ -183,29 +183,30 @@ F_1(t) = \frac{1}{\sqrt{2 \pi \sigma_1^2}} \int_{-\infty}^{\infty}{e^{-\frac{s^2
 \[
 F_2(t) = \frac{1}{\sqrt{2 \pi \sigma_2^2}} \int_{-\infty}^{\infty}{e^{-\frac{s^2}{2\sigma_2^2}} e^{-2\pi i s t} \, ds}
 \]
-Expanding the imaginery exponent
+Using Euler's Formula we can now say that
 \[
 F_1(t) = \frac{1}{\sqrt{2 \pi \sigma_1^2}} \int_{-\infty}^{\infty}{e^{-\frac{s^2}{2\sigma_1^2}} (cos(2\pi s t) + i sin(2\pi s t)) \, ds}
 \]
 \[
 F_2(t) = \frac{1}{\sqrt{2 \pi \sigma_2^2}} \int_{-\infty}^{\infty}{e^{-\frac{s^2}{2\sigma_2^2}} (cos(2\pi s t) + i sin(2\pi s t)) \, ds}
 \]
-Since the sine is an odd function, the integral of it will go to zero, thus we can simply the above equations
+Since the sine is an odd function, the integral of it will go to zero, thus we can simplify the above equations
 \[
 F_1(t) = \frac{1}{\sqrt{2 \pi \sigma_1^2}} \int_{-\infty}^{\infty}{e^{-\frac{s^2}{2\sigma_1^2}} cos(2\pi s t) \, ds}
 \]
 \[
 F_2(t) = \frac{1}{\sqrt{2 \pi \sigma_2^2}} \int_{-\infty}^{\infty}{e^{-\frac{s^2}{2\sigma_2^2}} cos(2\pi s t) \, ds}
 \]
-By what was asserted in Wolfram Alpha, on this web page:
+This Wolfram Alpha web page explains the result of that integration. 
 \begin{verbatim}
 http://mathworld.wolfram.com/FourierTransformGaussian.html
 \end{verbatim}
+We can now use that fact to assert that
 \[
-F_1(t) = \frac{1}{\sqrt{2 \pi \sigma_1^2}} \sqrt{2 \pi \sigma_1^2} e^{-2 \pi^2 t^2 \sigma_1^2}
+F_1(t) = \frac{1}{\sqrt{2 \pi \sigma_1^2}} \sqrt{2 \pi \sigma_1^2} \, e^{-2 \pi^2 t^2 \sigma_1^2}
 \]
 \[
-F_2(t) = \frac{1}{\sqrt{2 \pi \sigma_2^2}} \sqrt{2 \pi \sigma_2^2} e^{-2 \pi^2 t^2 \sigma_2^2}
+F_2(t) = \frac{1}{\sqrt{2 \pi \sigma_2^2}} \sqrt{2 \pi \sigma_2^2} \, e^{-2 \pi^2 t^2 \sigma_2^2}
 \]
 Simplifying we have the following
 \[
@@ -214,7 +215,7 @@ F_1(t) = e^{-2 \pi^2 t^2 \sigma_1^2}
 \[
 F_2(t) = e^{-2 \pi^2 t^2 \sigma_2^2}
 \]
-Let $F=F_1 \cdot F_2$ then we have
+Let $F=F_1 \cdot F_2$ since we want to multiply the frequency functions, then we have
 \[
 F(t) = e^{-2 \pi^2 t^2 (\sigma_1^2 + \sigma_2^2)}
 \]
@@ -222,31 +223,32 @@ Let $\sigma = -2 \pi^2 (\sigma_1^2 + \sigma_2^2)$, then
 \[
 F(t) = e^{\sigma t^2}
 \]
-We want the inverse transform of that function to get the finished function. 
+We want the inverse transform of $F$ to get the convolution. Thus we can say that 
 \[
 g_3(x) = \int_{-\infty}^{\infty} e^{2\pi i x t} F(t) dt
 \]
 \[
 g_3(x) = \int_{-\infty}^{\infty} e^{2\pi i x t}e^{\sigma t^2} dt
 \]
-From what we did before (TODO: Add in more detail)
+Expanding using Euler's formula and using the fact that sine is an odd function, we can say that
 \[
 g_3(x) = \int_{-\infty}^{\infty} cos(2 \pi x t)e^{\sigma t^2} dt
 \]
-By the same logic used above, we can say that
+This is the same integral as was in the Wolfram Alpha web page, thus we can assert that
 \[
 g_3(x) = \sqrt{-\frac{\pi}{\sigma}} \, e^{\frac{\pi^2 x^2}{\sigma}}
 \]
 Expanding $\sigma$ and then simplifying, we have
 \[
-g_3(x) = \sqrt{\frac{1}{2\pi (\sigma_1^2 + \sigma_2^2)}} \, e^{-\frac{x^2}{2(\sigma_1^2 + \sigma_2^2)}}
+g_3(x) = \frac{1}{\sqrt{2\pi (\sigma_1^2 + \sigma_2^2)}} \, e^{-\frac{x^2}{2(\sigma_1^2 + \sigma_2^2)}}
 \]
 If we let $\sigma_3 = \sqrt{\sigma_1^2 + \sigma_2^2}$ then we have
 \[
-g_3(x) = \sqrt{\frac{1}{2\pi \sigma_3^2}} \, e^{-\frac{x^2}{2\sigma_3^2}}
+g_3(x) = \frac{1}{\sqrt{2\pi \sigma_3^2}} \, e^{-\frac{x^2}{2\sigma_3^2}}
 \]
-This is clearly a Gaussian, thus we have proved that $g_3$ is a Gaussian with the variance of $\sigma_3$ as defined above. 
+This is clearly a Gaussian with variance $\sigma_3$ as defined above, thus $g_3$ is a Gaussian as desired. 
 
+\newpage
 
 \section*{Problem 6}
 
