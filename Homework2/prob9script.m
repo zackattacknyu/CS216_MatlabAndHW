@@ -17,7 +17,7 @@ bottomY = 50;
 topY = 64;
 
 nLetterImageData = imageData(bottomY:topY,leftX:rightX);
-imwrite(nLetterImageData,'nine_word_dilbert1.jpg','JPEG');
+imwrite(nLetterImageData,'template_dilbert1.jpg','JPEG');
 
 %correlation = xcorr2(imageData,nLetterImageData);
 %correlation = xcorr2(nLetterImageData,imageData);
@@ -34,7 +34,7 @@ colorbar;
 %does the thresholding
 %this is the 1-D example. It needs to be extended to 2D
 %threshold = mean(correlation(:)); %this is currently 387
-threshold = 102;
+threshold = 104;
 L = (correlation(2:end-1,2:end-1) > correlation(1:end-2,2:end-1));
 R = (correlation(2:end-1,2:end-1) > correlation(3:end,2:end-1));
 
@@ -71,7 +71,7 @@ rgbImageData(2:end-1,2:end-1,3) = imageData(2:end-1,2:end-1).*maximaInverted;
 figure
 imshow(rgbImageData);
 sizeMaxima = size(maxima);
-sizeTemplate = size(Template);
+sizeTemplate = size(T);
 horizSizeTemplate = sizeTemplate(2);
 vertSizeTemplate = sizeTemplate(1);
 for y = 1:sizeMaxima(1)
@@ -79,7 +79,7 @@ for y = 1:sizeMaxima(1)
       if(maxima(y,x) > 0)
           xCoord = (x+1) - horizSizeTemplate/2;
           yCoord = (y+1) + vertSizeTemplate/2;
-         rectangle('Position',[xCoord yCoord horizSizeTemplate vertSizeTemplate],'FaceColor','r');
+         rectangle('Position',[xCoord yCoord horizSizeTemplate vertSizeTemplate],'LineWidth',1,'EdgeColor','r');
       end
    end
 end
