@@ -1,7 +1,8 @@
 imageName = 'dilbert1.jpg';
 
 %for dilbert, it is already BW, so no need to call rgb2gray
-imageData = im2double(imread(imageName));
+rawImageData = 1-im2double(imread(imageName));
+imageData = double((rawImageData > 0.5));
 
 %figure
 %imshow(imageData)
@@ -10,10 +11,10 @@ imageData = im2double(imread(imageName));
 %[xVals,yVals] = ginput(2)
 
 %values for the word "Nine"
-rightX = 368;
-leftX = 322;
-bottomY = 32;
-topY = 46;
+rightX = 386;
+leftX = 375;
+bottomY = 50;
+topY = 64;
 
 nLetterImageData = imageData(bottomY:topY,leftX:rightX);
 imwrite(nLetterImageData,'nine_word_dilbert1.jpg','JPEG');
@@ -33,7 +34,7 @@ colorbar;
 %does the thresholding
 %this is the 1-D example. It needs to be extended to 2D
 %threshold = mean(correlation(:)); %this is currently 387
-threshold = 450;
+threshold = 102;
 L = (correlation(2:end-1,2:end-1) > correlation(1:end-2,2:end-1));
 R = (correlation(2:end-1,2:end-1) > correlation(3:end,2:end-1));
 
@@ -69,3 +70,16 @@ rgbImageData(2:end-1,2:end-1,3) = imageData(2:end-1,2:end-1).*maximaInverted;
 
 figure
 imshow(rgbImageData);
+sizeMaxima = size(maxima);
+sizeTemplate = size(Template);
+horizSizeTemplate = sizeTemplate(2);
+vertSizeTemplate = sizeTemplate(1);
+for y = 1:sizeMaxima(1)
+   for x = 1:sizeMaxima(2)
+      if(maxima(y,x) > 0)
+          xCoord = (x+1) - horizSizeTemplate/2;
+          yCoord = (y+1) + vertSizeTemplate/2;
+         rectangle('Position',[xCoord yCoord horizSizeTemplate vertSizeTemplate],'FaceColor','r');
+      end
+   end
+end

@@ -74,7 +74,7 @@ for y = 1:sizeMaxima(1)
       if(maxima(y,x) > 0)
           xCoord = (x+1) - horizSizeTemplate/2;
           yCoord = (y+1) + vertSizeTemplate/2;
-         rectangle('Position',[xCoord yCoord horizSizeTemplate vertSizeTemplate]);
+         rectangle('Position',[xCoord yCoord horizSizeTemplate vertSizeTemplate],'FaceColor','r');
       end
    end
 end
