@@ -135,15 +135,26 @@ Step 4 will take $max(HW,MN) log( max(HW, MN) )$ time. Again which one is the ma
 The total running time is thus $O(MN \cdot log(MN) + HW \cdot log(HW) )$ in the case where we use FFT. \\
 Assuming that $HW$ is the max, the running time is $O(HW \cdot log(HW))$. \\
 \\
-If the filter is $f(x,y) = f(x)g(y)$ then we could do the following:\\
-1. Compute the horizontal filter\\
-2. Compute the vertical filter\\
-3. Do point wise multiplication \\
+If the filter is $f(x,y) = f_1(x)f_2(y)$, let F be the Fourier transform, then the following happens by properties of convolution and the Fourier transform\\
+\[
+F( I*f ) = F(I) \cdot F(f) = F(I) \cdot (F(f_1) * F(f_2))
+\]
+Thus the procedure would be the following:\\
+1. Compute FFT of horizontal filter\\
+2. Compute FFT of the vertical filter\\
+3. Do convolution of the two FFTs found\\
+4. Compute FFT of the image\\
+5. Do point-wise multiplication of the FFT of the image with the filter found in step 3. \\
 \\
-Step 1 will take $HWM$ time and step 2 will be $HWN$ time. \\
-Step 3 will be $HW$ time. \\
-Total running time is thus $O( HW \cdot min(M,N))$ time. \\
-TODO: Double check this
+Step 1 and 2 will take $M log(M) + N log(N)$ time.  \\
+Step 3 will take $MN$ time using the normal convolution procedure. \\
+Step 4 will take $HW \cdot log(HW)$ time. \\
+Assuming $HW$ dominates, step 5 will take $HW$ time. \\
+Assuming that $HW$ is greater than $M$ or $N$, step 4 and 5 dominate. \\
+The total running time is thus $O( HW \cdot log(HW) )$ time. \\
+TODO: Check this
+
+\newpage
 
 \section*{Problem 5}
 
