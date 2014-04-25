@@ -1,3 +1,5 @@
+%this code does the plots for each of the functions
+
 %first part
 signal = zeros(1,100);
 signal(50) = 1;
@@ -41,3 +43,14 @@ plot(gaussFunc_freq);
 xlabel('Index');
 ylabel('Magnitude of Spectrum');
 title('Frequency Spectrum Magnitude of Gaussian function. sigma=1');
+
+%DFT of my favorite function, the parabola
+parabola_input = -0.5:1/50:0.5-1/50;
+parabola_signal = parabola_input.^2;
+parabola_dft = abs(fftshift(fft(parabola_signal)));
+
+figure
+plot(parabola_input,parabola_dft);
+xlabel('Parabola X Value');
+ylabel('Magnitude of Spectrum');
+title('Frequency Spectrum Magnitude with Parabola');
