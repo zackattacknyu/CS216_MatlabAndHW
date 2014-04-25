@@ -135,24 +135,35 @@ Step 4 will take $max(HW,MN) log( max(HW, MN) )$ time. Again which one is the ma
 The total running time is thus $O(MN \cdot log(MN) + HW \cdot log(HW) )$ in the case where we use FFT. \\
 Assuming that $HW$ is the max, the running time is $O(HW \cdot log(HW))$. \\
 \\
-If the filter is $f(x,y) = f_1(x)f_2(y)$, let F be the Fourier transform, then the following happens by properties of convolution and the Fourier transform\\
+If the filter is $f(x,y) = f_1(x)f_2(y)$, then assuming that $I$ is the image, it holds that $I*f = (I*f_1)*f_2$\\
+Here is the proof:\\
 \[
-F( I*f ) = F(I) \cdot F(f) = F(I) \cdot (F(f_1) * F(f_2))
+(f*I)(x,y) = \sum_{i=-\infty}^{\infty} \sum_{j=-\infty}^{\infty} f(i,j)I(x-i,y-j)
 \]
-Thus the procedure would be the following:\\
-1. Compute FFT of horizontal filter\\
-2. Compute FFT of the vertical filter\\
-3. Do convolution of the two FFTs found\\
-4. Compute FFT of the image\\
-5. Do point-wise multiplication of the FFT of the image with the filter found in step 3. \\
+By separability,
+\[
+(f*I)(x,y) = \sum_{i=-\infty}^{\infty} \sum_{j=-\infty}^{\infty} f_1(i)f_2(j)I(x-i,y-j)
+\]
+\[
+(f*I)(x,y) = \sum_{i=-\infty}^{\infty} f_1(i) (\sum_{j=-\infty}^{\infty} f_2(j)I(x-i,y-j))
+\]
+The inner summation is just convolution, thus we have
+\[
+(f*I)(x,y) = \sum_{i=-\infty}^{\infty} f_1(i) (I*f_2)(i)
+\]
+The summation shown here is convolution again, thus
+\[
+(f*I)(x,y) = (I*f_2)*f_1
+\]
+By associativity and commutativity of convolution, $f*I=(I*f_1)*f_2$, proving our assertion. \\
 \\
-Step 1 and 2 will take $M log(M) + N log(N)$ time.  \\
-Step 3 will take $MN$ time using the normal convolution procedure. \\
-Step 4 will take $HW \cdot log(HW)$ time. \\
-Assuming $HW$ dominates, step 5 will take $HW$ time. \\
-Assuming that $HW$ is greater than $M$ or $N$, step 4 and 5 dominate. \\
-The total running time is thus $O( HW \cdot log(HW) )$ time. \\
-TODO: Check this
+By what was just shown, we can do this procedure:\\
+1. Convolve the image horizontally. \\
+2. Convolve the result vertically. \\
+Step 1 will take $O(HWM)$ time and step 2 will take $O(HWN)$ time, \\
+thus the total running time is $O(HW \cdot max(M,N))$. \\
+Assuming $M$ is the max, the running time is $O(HWM)$.\\
+Thus, by doing the horizontal filter then vertical filter, we can do even better than if we convert to frequency space. \\ 
 
 \newpage
 
