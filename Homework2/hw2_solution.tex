@@ -109,11 +109,14 @@ This means that
 \[
 g_1(x)g_2(y) = \frac{1}{2\pi \sigma^2} e^{-\frac{x^2 + y^2}{2\sigma^2}}
 \]
-This allows us to say that $g(x,y) = g_1(x)g_2(y)$
+This is equal to $g(x,y)$, thus allowing us to say that $g(x,y) = g_1(x)g_2(y)$
+
+\newpage
 
 \section*{Problem 4}
 
-For the spatial domain running time, we can think of convolution as for each pixel in the image, we apply the filter to it. \\
+For the spatial domain running time, we can think of convolution as the following:\\
+- For each pixel in the image, we apply the filter to it. \\
 Thus there are $H \cdot W$ iterations of the filter\\
 Each filter will take $M \cdot N$ time. \\
 Thus the time complexity is $O(MNHW)$\\
@@ -129,7 +132,7 @@ Step 2 will take $HW \cdot log(HW)$ time\\
 Step 3 will take $max(HW,MN)$ time. The identity of the max will not matter in the end since the previous step eclipses this one. \\
 Step 4 will take $max(HW,MN) log( max(HW, MN) )$ time. Again which one is the max does not matter because of step 1 and 2. \\
 \\
-The total running time is thus $O(MN \cdot log(MN) + HW \cdot log(HW) )$ time. \\
+The total running time is thus $O(MN \cdot log(MN) + HW \cdot log(HW) )$ in the case where we use FFT. \\
 Assuming that $HW$ is the max, the running time is $O(HW \cdot log(HW))$. \\
 \\
 If the filter is $f(x,y) = f(x)g(y)$ then we could do the following:\\
