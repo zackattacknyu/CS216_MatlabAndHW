@@ -58,15 +58,17 @@ Similarly
 \[
 (f*y)(t) = \sum_{v=-\infty}^{\infty} f(t-v)y(v) = \sum_{v=-\infty}^{\infty} \sum_{s=-\infty}^{\infty} f(t-v)g(s)h(v-s)
 \]
-In the second equation, do a change of variables $v = t-v+s$ which does not change the final result since we are going from negative infinity to infinity. For the second equation, we end up with \\
+In the second equation, do a change of variables $v = t-v'+s$ which does not change the final result since we are going from negative infinity to infinity. For the second equation, we end up with \\
 \[
-(f*y)(t) = \sum_{v=-\infty}^{\infty} \sum_{s=-\infty}^{\infty} f(v-s)g(s)h(t-v)
+(f*y)(t) = \sum_{v'=-\infty}^{\infty} \sum_{s=-\infty}^{\infty} f(v'-s)g(s)h(t-v')
 \]
-This proves that $(x*h)(t)=(f*y)(t)$ and since this applies for any three functions, we have proven that convolution is associative. 
+As can be observed, the first and second equation are now equal. This proves that $(x*h)(t)=(f*y)(t)$ and since this applies for any three functions, we have proven that convolution is associative. 
+
+\newpage
 
 \section*{Problem 2}
 
-If we correlate a function $f$ with an impulse function, then we get $f(-t)$, \\
+If we correlate a function $f$ with an impulse function, we get $f(-t)$, \\
 so the function gets flipped around the y-axis. \\
 Here is the proof:\\
 Take the impulse function g, so $g(0)=1$ and $g(x)=0$ for all other $x$ \\
@@ -81,17 +83,18 @@ Now let $h(t)=g(t)$. We will prove that $(f*g)*h \neq f*(g*h)$. \\
 \\
 For the right hand side, by what was shown above, \\
 $g*h = g$ since the impulse function is symmetric around the y-axis. \\
-This means that $f*(g*h)(t) = f*g(t) = f(-t)$. \\
+This means that $(f*(g*h))(t) = (f*g)(t) = f(-t)$. \\
 \\
 For the left hand side, by what was shown above, \\
-$(f*g)(t) = f(-t)$ thus $(f*g)*h(t) = (f(-t))*h(t) = f(t)$\\
+$(f*g)(t) = f(-t)$ thus $((f*g)*h)(t) = (f(-t))*h(t)$\\
+This will flip the function back to its original position, thus the left hand side is equal to $f(t)$\\
 \\
 For any non-symmetric function $f$, such as $f(t) = 3t+5$, it holds that $f(t) \neq f(-t)$ \\
 thus the left hand side is not equal to the right hand side. \\
 \\
 Since we have example functions whose correlations are not associative, there is no way correlation is associative. 
 
-
+\newpage
 
 \section*{Problem 3}
 
