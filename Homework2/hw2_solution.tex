@@ -258,12 +258,13 @@ If we let $\sigma_3 = \sqrt{\sigma_1^2 + \sigma_2^2}$ then we have
 g_3(x) = \frac{1}{\sqrt{2\pi \sigma_3^2}} \, e^{-\frac{x^2}{2\sigma_3^2}}
 \]
 This is clearly a Gaussian with variance $\sigma_3$ as defined above, thus $g_3$ is a Gaussian as desired.\\
+\newpage
+We can use this formula instead of normal convolution formula to find the convolution of two Gaussians and it will save us computation time. \\
 \\
-We can use this formula to find the convolution of two Gaussians \\
-instead of the normal convolution formula and it will save us computation time. \\
-Assuming that we have two Gaussian filters of size $M \times N$ that we want to convolve, \\
+Assuming that we have two Gaussian filters of size $M \times N$ that we want to convolve,
 using the normal formula, the convolution of them will take $O(M^2 N^2)$ time. \\
-From what was shown above we already have the formula, \\
+\\
+From what was shown above we already have the formula,
 thus we can apply it to each slot in the filter making the time complexity $O(MN)$. \\
 
 \newpage
@@ -302,24 +303,30 @@ thus we can apply it to each slot in the filter making the time complexity $O(MN
 \caption{Frequency Spectrum Magnitude Plot for Gaussian Function with $\sigma=2$}
 \end{figure}
 
-\subsection*{Magnitude,Phase Experiment for Zebra and Simpsons}
+\subsection*{Magnitude and Phase Experiment for Zebra and Simpsons}
 
 \begin{figure}[H]
 \centering
-\includegraphics[height=3in]{magImage_zebraMod.jpg}
-\caption{Magnitude of Zebra picture}
+\includegraphics[height=3in]{zebraMod.jpg}
+\caption{The Zebra picture, modified to be the same size as the simpsons picture}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[height=3in]{phaseImage_zebraMod.jpg}
-\caption{Phase of Simpsons picture}
+\includegraphics[height=3in]{simpsons.jpg}
+\caption{The Simpsons picture}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[height=3in]{mag_zebra_phase_simpsons.jpg}
 \caption{Magnitude of Zebra picture with Phase of Simpsons picture}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{mag_simpsons_phase_zebra.jpg}
+\caption{Magnitude of Simpsons picture with Phase of Zebra picture}
 \end{figure}
 
 \subsection*{Other Interesting Result}
