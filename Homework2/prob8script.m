@@ -10,21 +10,23 @@ imageData = double((rawImageData > 0.5));
 %used to get the corner values of the square we care about 
 %[xVals,yVals] = ginput(2)
 
-%values for the word "Nine"
+%values for the letter "N"
 rightX = 386;
 leftX = 375;
 bottomY = 50;
 topY = 64;
 
 nLetterImageData = imageData(bottomY:topY,leftX:rightX);
-imwrite(nLetterImageData,'nine_word_dilbert1.jpg','JPEG');
+imwrite(nLetterImageData,'template_dilbert1.jpg','JPEG');
 
 %correlation = xcorr2(imageData,nLetterImageData);
 %correlation = xcorr2(nLetterImageData,imageData);
 Template = flipud(fliplr(nLetterImageData));
 correlation = conv2(imageData,Template,'same');
+figure
 imagesc(correlation);
 colorbar;
+title('Image after correlation with template');
 
 %does the thresholding
 %this is the 1-D example. It needs to be extended to 2D
@@ -65,6 +67,7 @@ rgbImageData(2:end-1,2:end-1,3) = imageData(2:end-1,2:end-1).*maximaInverted;
 
 figure
 imshow(rgbImageData);
+title('Final Detection Results');
 sizeMaxima = size(maxima);
 sizeTemplate = size(Template);
 horizSizeTemplate = sizeTemplate(2);
@@ -74,7 +77,7 @@ for y = 1:sizeMaxima(1)
       if(maxima(y,x) > 0)
           xCoord = (x+1) - horizSizeTemplate/2;
           yCoord = (y+1) + vertSizeTemplate/2;
-         rectangle('Position',[xCoord yCoord horizSizeTemplate vertSizeTemplate],'FaceColor','r');
+         rectangle('Position',[xCoord yCoord horizSizeTemplate vertSizeTemplate],'LineWidth',1,'EdgeColor','r');
       end
    end
 end

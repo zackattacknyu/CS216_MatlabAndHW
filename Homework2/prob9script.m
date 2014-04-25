@@ -10,7 +10,7 @@ imageData = double((rawImageData > 0.5));
 %used to get the corner values of the square we care about 
 %[xVals,yVals] = ginput(2)
 
-%values for the word "Nine"
+%values for the letter "N"
 rightX = 386;
 leftX = 375;
 bottomY = 50;

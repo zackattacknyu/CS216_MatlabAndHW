@@ -1,12 +1,12 @@
-picname = 'zebra1.jpg';
+picname = 'zebra1.jpg'; %specify which pic to use
 imageData = im2double(rgb2gray(imread(picname)));
 figure
 imagesc(imageData);
 colorbar
 title('Original Image');
 
-sigma = 2;
-gaussFilt = ones(sigma,sigma).*(1/sigma^2);
+sigma = 3; %change this to sigma=2 for other example
+gaussFilt = fspecial('gaussian',sigma);
 filteredImageData = conv2(imageData,gaussFilt,'same');
 figure
 imagesc(filteredImageData);
