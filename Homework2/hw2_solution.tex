@@ -257,13 +257,20 @@ If we let $\sigma_3 = \sqrt{\sigma_1^2 + \sigma_2^2}$ then we have
 \[
 g_3(x) = \frac{1}{\sqrt{2\pi \sigma_3^2}} \, e^{-\frac{x^2}{2\sigma_3^2}}
 \]
-This is clearly a Gaussian with variance $\sigma_3$ as defined above, thus $g_3$ is a Gaussian as desired. 
+This is clearly a Gaussian with variance $\sigma_3$ as defined above, thus $g_3$ is a Gaussian as desired.\\
+\\
+We can use this formula to find the convolution of two Gaussians \\
+instead of the normal convolution formula and it will save us computation time. \\
+Assuming that we have two Gaussian filters of size $M \times N$ that we want to convolve, \\
+using the normal formula, the convolution of them will take $O(M^2 N^2)$ time. \\
+From what was shown above we already have the formula, \\
+thus we can apply it to each slot in the filter making the time complexity $O(MN)$. \\
 
 \newpage
 
 \section*{Problem 6}
 
-Here are the initial plots
+Here are the initial 1D plots
 
 \begin{figure}[H]
 \centering
