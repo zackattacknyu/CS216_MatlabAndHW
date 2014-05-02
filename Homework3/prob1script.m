@@ -1,4 +1,4 @@
-imname = 'zebra_small.jpg';
+imname = 'simpsons.jpg';
 imageData = im2double(imread(imname));
 imageDataSize = size(imageData);
 numRow = imageDataSize(1);
@@ -9,7 +9,7 @@ imageDataRowRedEn = reshape(imageData,[numPixels 3]);
 imageDataRowRedEn(:,1) = imageDataRowRedEn(:,1)*100;
 
 %k-Means cluster
-k=5;
+k=10;
 [Indices,Colors] = kmeans(imageDataRow,k);
 [IndicesRedEn,ColorsRedEn] = kmeans(imageDataRowRedEn,k);
 newImageDataRow = zeros([numPixels 3]);

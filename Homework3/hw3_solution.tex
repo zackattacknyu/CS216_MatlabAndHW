@@ -43,12 +43,53 @@
 
 \section*{Problem 1}
 
-%\begin{figure}[H]
-%\centering
-%\includegraphics[height=4in]{prob1plot.jpg}
-%\caption{Probability of Class Labels with decision boundaries marked}
-%\end{figure}
+\subsection*{k-Means Clustering results}
 
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{simpsons.jpg}
+\caption{Original Image}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{2-means_simpsons.jpg}
+\caption{The k-Means Image when $k=2$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{5-means_simpsons.jpg}
+\caption{The k-Means Image when $k=5$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{10-means_simpsons.jpg}
+\caption{The k-Means Image when $k=10$}
+\end{figure}
+
+\subsection*{Result when skewing the Red Channel}
+
+If we multiply the red channel by 100, then the mean will tend more toward the red channel than the other channels. The result will be a red tint on the final result image. That is exactly what happened with the following images which are the same k-means images as above but the red channel was multiplied by 100 before k-Means was done. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{2-means_redEn_simpsons.jpg}
+\caption{The k-Means Image when $k=2$ and a skewed red channel}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{5-means_redEn_simpsons.jpg}
+\caption{The k-Means Image when $k=5$ and a skewed red channel}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{10-means_redEn_simpsons.jpg}
+\caption{The k-Means Image when $k=10$ and a skewed red channel}
+\end{figure}
 
 \end{document}
 
