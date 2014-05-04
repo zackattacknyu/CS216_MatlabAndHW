@@ -31,7 +31,7 @@
 
 
 
-\title{CS 216 Homework \#}
+\title{CS 216 Homework 3}
 \author{Zachary DeStefano, 15247592}
 \date{Due Date: May 9, 2014 in class}
 
@@ -90,6 +90,144 @@ If we multiply the red channel by 100, then the mean will tend more toward the r
 \includegraphics[height=3in]{10-means_redEn_simpsons.jpg}
 \caption{The k-Means Image when $k=10$ and a skewed red channel}
 \end{figure}
+
+\newpage
+
+\section*{Problem 2}
+
+Here is my original image:
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{zebra_small.jpg}
+\caption{The image of the zebra}
+\end{figure}
+
+\subsection*{8 filter images}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{sigma_1_horizDeriv_zebra_small.jpg}
+\caption{The Horizontal Derivative image when $\sigma=1$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{sigma_2_horizDeriv_zebra_small.jpg}
+\caption{The Horizontal Derivative image when $\sigma=2$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{sigma_4_horizDeriv_zebra_small.jpg}
+\caption{The Horizontal Derivative image when $\sigma=4$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{sigma_1_vertDeriv_zebra_small.jpg}
+\caption{The Vertical Derivative image when $\sigma=1$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{sigma_2_vertDeriv_zebra_small.jpg}
+\caption{The Vertical Derivative image when $\sigma=2$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{sigma_4_vertDeriv_zebra_small.jpg}
+\caption{The Vertical Derivative image when $\sigma=4$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{sigma2_2_sigma1_1_gaussDiff_zebra_small.jpg}
+\caption{The Gaussian Difference when $\sigma_2=2$ and $\sigma_1=1$}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{sigma2_4_sigma1_2_gaussDiff_zebra_small.jpg}
+\caption{The Gaussian Difference when $\sigma_2=4$ and $\sigma_1=2$}
+\end{figure}
+
+\subsection*{Matlab code}
+
+Here is the parent script that calls the function:
+
+\begin{verbatim}
+
+imname = 'zebra_small.jpg';
+imageData = im2double(rgb2gray(imread(imname)));
+get8FilterImages(imageData,imname);
+
+\end{verbatim}
+
+Here is the main function that gets the information:
+
+\begin{verbatim}
+
+function [ horizDeriv_Sigma1_imageData,vertDeriv_Sigma1_imageData,...
+    horizDeriv_Sigma2_imageData,vertDeriv_Sigma2_imageData,...
+    horizDeriv_Sigma4_imageData,vertDeriv_Sigma4_imageData,...
+    gaussDiff_4_2_imageData,gaussDiff_2_1_imageData] = get8FilterImages( imageData,imname )
+%GET8FILTERIMAGES Summary of this function goes here
+%   Detailed explanation goes here
+
+[horizDeriv_Sigma1_imageData,vertDeriv_Sigma1_imageData] =...
+    computeDerivImages(imageData,1,imname);
+[horizDeriv_Sigma2_imageData,vertDeriv_Sigma2_imageData] =...
+    computeDerivImages(imageData,2,imname);
+[horizDeriv_Sigma4_imageData,vertDeriv_Sigma4_imageData] =...
+    computeDerivImages(imageData,4,imname);
+gaussDiff_4_2_imageData = computeGaussDiff(imageData,1,2,imname);
+gaussDiff_2_1_imageData = computeGaussDiff(imageData,2,4,imname);
+end
+
+\end{verbatim}
+
+This is the helper function that gets the gaussian derivatives:
+
+\begin{verbatim}
+function [horizDerivImage,vertDerivImage] = computeDerivImages( imageData,sigma,imname )
+%COMPUTEDERIVIMAGES Summary of this function goes here
+%   Detailed explanation goes here
+
+gaussFilt = fspecial('gaussian',sigma);
+filteredImageData = conv2(imageData,gaussFilt,'same');
+horizDerivFilter = [1 -1];
+horizDerivImage = conv2(filteredImageData,horizDerivFilter,'same');
+vertDerivFilter = transpose(horizDerivFilter);
+vertDerivImage = conv2(filteredImageData,vertDerivFilter,'same');
+horizDerivImageName = strcat('sigma_',num2str(sigma),'_horizDeriv_',imname);
+vertDerivImageName = strcat('sigma_',num2str(sigma),'_vertDeriv_',imname);
+imwrite(horizDerivImage,horizDerivImageName,'JPEG');
+imwrite(vertDerivImage,vertDerivImageName,'JPEG');
+
+end
+\end{verbatim}
+
+This is the helper function that computes the gaussian differences
+
+\begin{verbatim}
+function [filterDiffImageData] = computeGaussDiff( imageData,sigma1,sigma2,imname )
+%COMPUTEDERIVIMAGES Summary of this function goes here
+%   Detailed explanation goes here
+
+gaussFilt1 = fspecial('gaussian',sigma1);
+gaussFilt2 = fspecial('gaussian',sigma2);
+filteredImageData1 = conv2(imageData,gaussFilt1,'same');
+filteredImageData2 = conv2(imageData,gaussFilt2,'same');
+filterDiffImageData = filteredImageData2-filteredImageData1;
+filterDiffImageName = strcat('sigma2_',num2str(sigma2),'_sigma1_',...
+    num2str(sigma1),'_gaussDiff_',imname);
+
+imwrite(filterDiffImageData,filterDiffImageName,'JPEG');
+
+end
+\end{verbatim}
 
 \end{document}
 
