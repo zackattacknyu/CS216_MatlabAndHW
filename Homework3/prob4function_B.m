@@ -1,17 +1,12 @@
-function [  ] = prob4function(imageData)
+function [  ] = prob4function( imageData,centerX,centerY,radius )
 %PROB4FUNCTION Summary of this function goes here
 %   Detailed explanation goes here
 
-imageDataSize = size(imageData);
+[responses,~] = prob3function(imageData,centerX,centerY,radius,1);
+
+imageDataSize = size(responses);
 numRow = imageDataSize(1);
 numColumn = imageDataSize(2);
-
-responses = zeros(numRow,numColumn,8);
-[responses(:,:,1),responses(:,:,2),responses(:,:,3),...
-    responses(:,:,4),responses(:,:,5),responses(:,:,6),...
-    responses(:,:,7),responses(:,:,8)] = ...
-    get8FilterImages(imageData,'zebra_small_patch.jpg');
-
 numPixels = numRow*numColumn;
 imageDataRow = reshape(responses,[numPixels 8]);
 
