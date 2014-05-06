@@ -1,0 +1,8 @@
+*.idb
+*.pdb
+*.unsuccessfulbuild
+*.lastbuildstate
+*.obj
+*.command.1.tlog
+*.write.1.tlog
+*.read.1.tlog
