@@ -21,6 +21,7 @@ k=20;
 labelData = reshape(Indices,[numRow numColumn]);
 figure
 imagesc(labelData);
-colorbar;
+colormap jet
+colorbar
 end
 
