@@ -1,4 +1,4 @@
-function [responses,meanResponse] = ...
+function [responses,meanResponse,imagePatch] = ...
     prob3function( imageData, centerX,centerY,radius,suppressOutput )
 %PROB3FUNCTION Summary of this function goes here
 %   Detailed explanation goes here
@@ -12,15 +12,15 @@ responses = zeros(radius+1,radius+1,8);
     responses(:,:,7),responses(:,:,8)] = ...
     get8FilterImages(imagePatch,'zebra_small_patch.jpg');
 
-meanResponse = mean(responses,3);
+meanResponse = mean(abs(responses),3);
 
 if(suppressOutput ~= 1)
+    %figure
+    %imshow(imagePatch); 
+    %figure
+    %imshow(meanResponse);
     figure
-    imshow(imagePatch); 
-    figure
-    imshow(meanResponse);
-    figure
-    bar(meanResponse,10);
+    bar(meanResponse,50);
 end
 
 

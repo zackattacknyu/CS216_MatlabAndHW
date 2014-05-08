@@ -153,6 +153,16 @@ Here is my original image:
 \caption{The Gaussian Difference when $\sigma_2=4$ and $\sigma_1=2$}
 \end{figure}
 
+\subsection*{8 filters in one image}
+
+Here are the 8 filters from above put together in one image. The first three images in the first column show the horizontal derivatives. The first three images in the second column show the vertical derivatives. In both cases, $\sigma=1$ in the first row, $\sigma=2$ in the second row, and $\sigma=3$ in the third row. In the last row is the Guassian difference images with $G_4-G_2$ as the first image and $G_2-G_1$ as the second image.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=7in]{prob2filterImages.jpg}
+\caption{The Filter Images}
+\end{figure}
+
 \subsection*{Matlab code}
 
 Here is the parent script that calls the function:
@@ -161,7 +171,28 @@ Here is the parent script that calls the function:
 
 imname = 'zebra_small.jpg';
 imageData = im2double(rgb2gray(imread(imname)));
-get8FilterImages(imageData,imname);
+%
+%h1 means horizontal derivative, sigma 1
+%h2, h4, v1, v2, v4 follow the same thing
+%g42 is gaussian 4-2, g21 is similar
+[h1,v1,h2,v2,h4,v4,g42,g21] = get8FilterImages(imageData,imname);
+figure
+subplot(4,2,1)
+imshow(h1)
+subplot(4,2,2)
+imshow(v1)
+subplot(4,2,3)
+imshow(h2)
+subplot(4,2,4)
+imshow(v2)
+subplot(4,2,5)
+imshow(h4)
+subplot(4,2,6)
+imshow(v4)
+subplot(4,2,7)
+imshow(g42)
+subplot(4,2,8)
+imshow(g21)
 
 \end{verbatim}
 
@@ -228,6 +259,44 @@ imwrite(filterDiffImageData,filterDiffImageName,'JPEG');
 
 end
 \end{verbatim}
+
+\newpage
+
+\section*{Problem 3}
+
+These are the image patches that were filtered and then analyzed. The left one is the neck of the zebra. The middle one is the picture of the tree leaves above the zebra's back. The right one is the grass in front of the zebra. The radius of the patch was scaled and it was scaled in such a way so that the patch would capture that object and only that object. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=3in]{prob3patches.jpg}
+\caption{Image Patches that were analyzed}
+\end{figure}
+
+Here is the visualization for each of the mean absolute response vectors. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{prob3patch1bar.jpg}
+\caption{Bar graph visualization for the neck image patch}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{prob3patch2bar.jpg}
+\caption{Bar graph visualization for the leaves image patch}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=3in]{prob3patch3bar.jpg}
+\caption{Bar graph visualization for the grass image patch}
+\end{figure}
+
+\newpage
+
+\section*{Problem 4}
+
+Here is the color map created by 
 
 \end{document}
 
