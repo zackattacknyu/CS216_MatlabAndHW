@@ -39,14 +39,13 @@ end
 figure
 subplot(311);
 imagesc(im);
-colorbar;
 title('Original image');
 subplot(312);
 imagesc(noisy);
+colorbar;
 title('Noisy image');
 subplot(313);
 imagesc(reshape(labels,[H W]));
-colorbar;
 title('Min-cut');
 
 end
