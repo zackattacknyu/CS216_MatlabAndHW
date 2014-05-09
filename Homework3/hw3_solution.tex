@@ -296,7 +296,7 @@ For segtest2.jpg, the results were really nice. The dragon ended up in the foreg
 \caption{Min cut results for segtest2.jpg}
 \end{figure}
 
-For segtest1.jpg, the results were worse. I tried to make the maroon ball the foreground and the rest the background but it did not quite divide it that way.
+For segtest1.jpg, the results were worse. I tried to make the maroon ball the foreground and the rest the background but it did not quite divide it that way. I made $\lambda=20$ so that there was more of an emphasis on similarity to the foreground and background pixel rather than similarity between neighbors. It ended up capturing the maroon ball as the foreground but other objects were included as well as part of the background gradient. The background included part of the background gradient as well as other things too. Here are the results.
 
 \begin{figure}[H]
 \centering
@@ -304,7 +304,7 @@ For segtest1.jpg, the results were worse. I tried to make the maroon ball the fo
 \caption{Min cut results for segtest1.jpg}
 \end{figure}
 
-I decided to use a picture of a hockey puck as an interesting example. A hockey puck has a relatively uniform color so I wanted to see if it's shape would come out when using the min cut algorithm. As it turns out, it worked very well. 
+I decided to use a picture of a hockey puck as an interesting example. A hockey puck has a relatively uniform color so I wanted to see if it's shape would come out when using the min cut algorithm. As it turns out, it worked very well. It did not need to tune the $\lambda$ parameter for this case. 
 
 \begin{figure}[H]
 \centering
@@ -322,7 +322,13 @@ With this problem, I decided to use the filterbank image data for the unary matr
 \caption{Min cut results for segtest2.jpg}
 \end{figure}
 
-These were the results for segtest1.jpg
+For segtest1.jpg, usign the filter bank meant that it was good for edge detection. This means that the black white gradient was better detected as the foreground. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=6in]{prob5plotB_2_filter.jpg}
+\caption{Filterbank for segtest1.jpg}
+\end{figure}
 
 \begin{figure}[H]
 \centering

@@ -1,6 +1,6 @@
 %script for problem 5, Part B
 
-image = im2double(imread('segtest3.jpg'));
+image = im2double(imread('segtest1.jpg'));
 figure
 imshow(image);
 imageSize = size(image);
@@ -12,6 +12,8 @@ N = H*W;
 pointsX = floor(pointsX);
 pointsY = floor(pointsY);
 radius=1;
+
+prob2function(rgb2gray(image));
 
 responses = zeros(H,W,8);
 [responses(:,:,1),responses(:,:,2),responses(:,:,3),...
@@ -40,7 +42,7 @@ foreColorMatrix = repmat(foreColor,[N 1]);
 foreRGBdist = sqrt(sum(abs(foreColorMatrix-pixelResponseInfo),2));
 backRGBdist = sqrt(sum(abs(backColorMatrix-pixelResponseInfo),2));
 
-lambda = 1;
+lambda = 0.1;
 segclass = zeros(N,1);
 pairwise = sparse(N,N);
 

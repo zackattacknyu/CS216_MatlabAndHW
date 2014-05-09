@@ -33,7 +33,7 @@ foreColorMatrix = repmat(foreColor,[N 1]);
 foreRGBdist = sqrt(sum(abs(foreColorMatrix-pixelData),2));
 backRGBdist = sqrt(sum(abs(backColorMatrix-pixelData),2));
 
-lambda = 1;
+lambda = 20;
 segclass = zeros(N,1);
 pairwise = sparse(N,N);
 
