@@ -1,4 +1,4 @@
-image = im2double(imread('segtest2.jpg'));
+image = im2double(imread('segtest1.jpg'));
 figure
 imshow(image);
 imageSize = size(image);
