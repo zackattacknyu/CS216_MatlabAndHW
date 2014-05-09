@@ -3,10 +3,12 @@ function [horizDerivImage,vertDerivImage] = computeDerivImages( imageData,sigma,
 %   Detailed explanation goes here
 
 gaussFilt = fspecial('gaussian',sigma);
-filteredImageData = conv2(imageData,gaussFilt,'same');
+rowNum = ceil(sigma/2);
+gaussFilter = gaussFilt(rowNum,:);
+filteredImageData = conv2(imageData,gaussFilter,'same');
 horizDerivFilter = [1 -1];
 horizDerivImage = conv2(filteredImageData,horizDerivFilter,'same');
-vertDerivFilter = transpose(horizDerivFilter);
+vertDerivFilter = [1;-1];
 vertDerivImage = conv2(filteredImageData,vertDerivFilter,'same');
 %horizDerivImageName = strcat('sigma_',num2str(sigma),'_horizDeriv_',imname);
 %vertDerivImageName = strcat('sigma_',num2str(sigma),'_vertDeriv_',imname);
