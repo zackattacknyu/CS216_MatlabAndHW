@@ -1,12 +1,17 @@
-function [  ] = prob4function( imageData,centerX,centerY,radius )
+function [  ] = prob4function(imageData)
 %PROB4FUNCTION Summary of this function goes here
 %   Detailed explanation goes here
 
-[responses,~] = prob3function(imageData,centerX,centerY,radius,1);
-
-imageDataSize = size(responses);
+imageDataSize = size(imageData);
 numRow = imageDataSize(1);
 numColumn = imageDataSize(2);
+
+responses = zeros(numRow,numColumn,8);
+[responses(:,:,1),responses(:,:,2),responses(:,:,3),...
+    responses(:,:,4),responses(:,:,5),responses(:,:,6),...
+    responses(:,:,7),responses(:,:,8)] = ...
+    get8FilterImages(imageData);
+
 numPixels = numRow*numColumn;
 imageDataRow = reshape(responses,[numPixels 8]);
 
@@ -16,6 +21,7 @@ k=20;
 labelData = reshape(Indices,[numRow numColumn]);
 figure
 imagesc(labelData);
-colorbar;
+colormap jet
+colorbar
 end
 
