@@ -1,6 +1,6 @@
 %script for problem 5, Part B
 
-image = im2double(imread('segtest2.jpg'));
+image = im2double(imread('segtest3.jpg'));
 figure
 imshow(image);
 imageSize = size(image);

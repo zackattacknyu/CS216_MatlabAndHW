@@ -330,7 +330,7 @@ I used $\lambda=0.001$ to make it more likely to detect similarity in filter ban
 \caption{Min cut results for segtest2.jpg}
 \end{figure}
 
-For segtest1.jpg, I took advantage of the fact that the filterbank showed edges well in order to see if I could get it to select the black/white gradient as the foreground and everything else as the background. In the filterbank image set, the black/white gradient shows up quite prominently, as can be seen below:
+For segtest1.jpg, I took advantage of the fact that the filterbank showed edges well in order to see if I could get it to select the black/white gradient as the foreground and everything else as the background. In the filterbank image set, the black/white gradient shows up quite prominently in some of the filters, as can be seen below:
 
 \begin{figure}[H]
 \centering
@@ -346,7 +346,7 @@ After using $\lambda=0.01$ to make sure it is more likely to select pixels simil
 \caption{Min cut results for segtest1.jpg}
 \end{figure}
 
-With the hockey puck image, using the filter bank was not advantageous because there were not too many gradients. The filter bank images though were good at detecting where the snow was so I tried to see if it would detect that as the background. Here is the filter bank output:
+With the hockey puck image, using the filter bank was not advantageous because there were not too many gradients. The filter bank images though were good at detecting where the snow was. Here is the filter bank output:
 
 \begin{figure}[H]
 \centering
@@ -354,7 +354,7 @@ With the hockey puck image, using the filter bank was not advantageous because t
 \caption{Filterbank for segtest3.jpg}
 \end{figure}
 
-I used $\lambda=0.001$ and selected the black top of the puck as the foreground and then the white part of the snow as the background. It did alright at trying to detect the two but there was a lot of noise due to similarities in the filterbank images between various parts of the image where there are not edges. 
+I tried using the filter bank output to detect the snow as background. I used $\lambda=0.001$ and selected the black top of the puck as the foreground and then the white part of the snow as the background. It did alright at trying to detect the two but there was a lot of noise likely due to similarities in the filterbank images between various parts of the image where there are not edges. 
 
 \begin{figure}[H]
 \centering
@@ -366,12 +366,9 @@ I used $\lambda=0.001$ and selected the black top of the puck as the foreground 
 
 \section*{Problem 6}
 
-In the Department of Ophthalmology at UC Irvine, they have pictures of collagen fibers in the eye and they want to use these pictures as a basis for a 3D reconstruction of the fibers. The first step in the 3D reconstruction will be segmenting the images and putting them together. In the images, the fibers look like lines stacked up on top of each other. These lines can merge together as well as split apart into two lines. \\
+In the Department of Ophthalmology at UC Irvine, they have pictures of collagen fibers in the eye and they want to use these pictures as a basis for a 3D reconstruction of the fibers. The first step in the 3D reconstruction will be segmenting the images and putting them together. In the images, the fibers look like lines stacked up on top of each other. These lines can merge together as well as split apart into two lines. I will attempt to use the segmentation to align consecutive images together.\\
 \\
-Here is a rough outline of the steps of the project: \\
-1. Segment the images to extract out the line data. \\
-2. Use the line information to line up images side by side \\
-3. Get long images that are formed by a series of images put side by side \\
+Here are some sample images of collagen layers that will be segmented:
 
 \end{document}
 
