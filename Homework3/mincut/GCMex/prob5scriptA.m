@@ -1,3 +1,5 @@
+%script for part A
+
 image = im2double(imread('segtest1.jpg'));
 figure
 imshow(image);
@@ -60,8 +62,8 @@ for x = 1:W
     pairwise(down,node) = dist;
   end
 end
-%{
-%[labels E Eafter] = GCMex(segclass, single(unary), pairwise, single(labelcost),0);
+
+[labels E Eafter] = GCMex(segclass, single(unary), pairwise, single(labelcost),0);
 
 figure
 
@@ -70,7 +72,7 @@ imagesc(image);
 title('Original image');
 
 subplot(212);
-%imagesc(reshape(labels,[H W]));
+imagesc(reshape(labels,[H W]));
 title('Min-cut');
 
 %}
