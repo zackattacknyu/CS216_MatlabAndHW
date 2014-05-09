@@ -6,12 +6,12 @@ function [ horizDeriv_Sigma1_imageData,vertDeriv_Sigma1_imageData,...
 %   Detailed explanation goes here
 
 [horizDeriv_Sigma1_imageData,vertDeriv_Sigma1_imageData] =...
-    computeDerivImages(imageData,1,imname);
+    computeDerivImages(imageData,1);
 [horizDeriv_Sigma2_imageData,vertDeriv_Sigma2_imageData] =...
-    computeDerivImages(imageData,2,imname);
+    computeDerivImages(imageData,2);
 [horizDeriv_Sigma4_imageData,vertDeriv_Sigma4_imageData] =...
-    computeDerivImages(imageData,4,imname);
-gaussDiff_4_2_imageData = computeGaussDiff(imageData,1,2,imname);
-gaussDiff_2_1_imageData = computeGaussDiff(imageData,2,4,imname);
+    computeDerivImages(imageData,4);
+gaussDiff_4_2_imageData = computeGaussDiff(imageData,1,2);
+gaussDiff_2_1_imageData = computeGaussDiff(imageData,2,4);
 end
 
