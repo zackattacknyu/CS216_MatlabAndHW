@@ -47,4 +47,4 @@ figure
 imagesc(noisy);
 colorbar;
 
-%prob5function(im,noisy)
+prob5function(im,noisy)
