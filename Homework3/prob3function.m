@@ -12,15 +12,18 @@ responses = zeros(radius+1,radius+1,8);
     responses(:,:,7),responses(:,:,8)] = ...
     get8FilterImages(imagePatch);
 
-meanResponse = mean(abs(responses),3);
+meanResponse = zeros(1,8);
+for i=1:8
+    meanResponse(i) = mean(mean(abs(responses(:,:,i))));
+end
 
 if(suppressOutput ~= 1)
-    %figure
-    %imshow(imagePatch); 
-    %figure
-    %imshow(meanResponse);
     figure
-    bar(meanResponse,50);
+    bar(meanResponse);
+    set(gca,'XTickLabel',{'Horiz_Sigma1', 'Vert_Sigma1',...
+        'Horiz_Sigma2', 'Vert_Sigma2', 'Horiz_Sigma4',...
+        'Vert_Sigma4', 'Sigma4-Sigma2', 'Sigma2-Sigma1'});
+    ylabel('Response');
 end
 
 

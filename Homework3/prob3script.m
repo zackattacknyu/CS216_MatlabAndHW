@@ -25,3 +25,7 @@ subplot(1,3,2)
 imshow(imagePatch2)
 subplot(1,3,3)
 imshow(imagePatch3)
+
+prob2function(imagePatch1);
+prob2function(imagePatch2);
+prob2function(imagePatch3);
