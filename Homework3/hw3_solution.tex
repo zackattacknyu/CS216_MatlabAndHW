@@ -117,31 +117,47 @@ Here is the parent script that calls the function:
 
 \begin{verbatim}
 
+
 imname = 'zebra_small.jpg';
 imageData = im2double(rgb2gray(imread(imname)));
 %
 %h1 means horizontal derivative, sigma 1
 %h2, h4, v1, v2, v4 follow the same thing
 %g42 is gaussian 4-2, g21 is similar
-[h1,v1,h2,v2,h4,v4,g42,g21] = get8FilterImages(imageData,imname);
+[h1,v1,h2,v2,h4,v4,g42,g21] = get8FilterImages(imageData);
 figure
-subplot(4,2,1)
-imshow(h1)
-subplot(4,2,2)
-imshow(v1)
-subplot(4,2,3)
-imshow(h2)
-subplot(4,2,4)
-imshow(v2)
-subplot(4,2,5)
-imshow(h4)
-subplot(4,2,6)
-imshow(v4)
-subplot(4,2,7)
-imshow(g42)
-subplot(4,2,8)
-imshow(g21)
 
+subplot(2,4,1)
+imshow(h1,[])
+title('Horiz,sigma=1');
+
+subplot(2,4,2)
+imshow(h2,[])
+title('Horiz,sigma=2');
+
+subplot(2,4,3)
+imshow(h4,[])
+title('Horiz,sigma=4');
+
+subplot(2,4,4)
+imshow(g42,[])
+title('G_4 - G_2');
+
+subplot(2,4,5)
+imshow(v1,[])
+title('Vert,sigma=1');
+
+subplot(2,4,6)
+imshow(v2,[])
+title('Vert,sigma=2');
+
+subplot(2,4,7)
+imshow(v4,[])
+title('Vert,sigma=4');
+
+subplot(2,4,8)
+imshow(g21,[])
+title('G_2-G_1');
 \end{verbatim}
 
 Here is the main function that gets the information:
@@ -151,18 +167,18 @@ Here is the main function that gets the information:
 function [ horizDeriv_Sigma1_imageData,vertDeriv_Sigma1_imageData,...
     horizDeriv_Sigma2_imageData,vertDeriv_Sigma2_imageData,...
     horizDeriv_Sigma4_imageData,vertDeriv_Sigma4_imageData,...
-    gaussDiff_4_2_imageData,gaussDiff_2_1_imageData] = get8FilterImages( imageData,imname )
+    gaussDiff_4_2_imageData,gaussDiff_2_1_imageData] = get8FilterImages( imageData )
 %GET8FILTERIMAGES Summary of this function goes here
 %   Detailed explanation goes here
 
 [horizDeriv_Sigma1_imageData,vertDeriv_Sigma1_imageData] =...
-    computeDerivImages(imageData,1,imname);
+    computeDerivImages(imageData,1);
 [horizDeriv_Sigma2_imageData,vertDeriv_Sigma2_imageData] =...
-    computeDerivImages(imageData,2,imname);
+    computeDerivImages(imageData,2);
 [horizDeriv_Sigma4_imageData,vertDeriv_Sigma4_imageData] =...
-    computeDerivImages(imageData,4,imname);
-gaussDiff_4_2_imageData = computeGaussDiff(imageData,1,2,imname);
-gaussDiff_2_1_imageData = computeGaussDiff(imageData,2,4,imname);
+    computeDerivImages(imageData,4);
+gaussDiff_4_2_imageData = computeGaussDiff(imageData,1,2);
+gaussDiff_2_1_imageData = computeGaussDiff(imageData,2,4);
 end
 
 \end{verbatim}
@@ -170,20 +186,18 @@ end
 This is the helper function that gets the gaussian derivatives:
 
 \begin{verbatim}
-function [horizDerivImage,vertDerivImage] = computeDerivImages( imageData,sigma,imname )
+function [horizDerivImage,vertDerivImage] = computeDerivImages( imageData,sigma )
 %COMPUTEDERIVIMAGES Summary of this function goes here
 %   Detailed explanation goes here
 
 gaussFilt = fspecial('gaussian',sigma);
-filteredImageData = conv2(imageData,gaussFilt,'same');
+rowNum = ceil(sigma/2);
+gaussFilter = gaussFilt(rowNum,:);
+filteredImageData = conv2(imageData,gaussFilter,'same');
 horizDerivFilter = [1 -1];
 horizDerivImage = conv2(filteredImageData,horizDerivFilter,'same');
-vertDerivFilter = transpose(horizDerivFilter);
+vertDerivFilter = [1;-1];
 vertDerivImage = conv2(filteredImageData,vertDerivFilter,'same');
-horizDerivImageName = strcat('sigma_',num2str(sigma),'_horizDeriv_',imname);
-vertDerivImageName = strcat('sigma_',num2str(sigma),'_vertDeriv_',imname);
-imwrite(horizDerivImage,horizDerivImageName,'JPEG');
-imwrite(vertDerivImage,vertDerivImageName,'JPEG');
 
 end
 \end{verbatim}
@@ -191,7 +205,7 @@ end
 This is the helper function that computes the gaussian differences
 
 \begin{verbatim}
-function [filterDiffImageData] = computeGaussDiff( imageData,sigma1,sigma2,imname )
+function [filterDiffImageData] = computeGaussDiff( imageData,sigma1,sigma2 )
 %COMPUTEDERIVIMAGES Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -200,10 +214,6 @@ gaussFilt2 = fspecial('gaussian',sigma2);
 filteredImageData1 = conv2(imageData,gaussFilt1,'same');
 filteredImageData2 = conv2(imageData,gaussFilt2,'same');
 filterDiffImageData = filteredImageData2-filteredImageData1;
-filterDiffImageName = strcat('sigma2_',num2str(sigma2),'_sigma1_',...
-    num2str(sigma1),'_gaussDiff_',imname);
-
-imwrite(filterDiffImageData,filterDiffImageName,'JPEG');
 
 end
 \end{verbatim}
