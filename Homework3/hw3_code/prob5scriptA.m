@@ -1,44 +1,38 @@
-%script for problem 5, Part B
+%script for part A
+%this needs to be run from a spot with GCMex compiled
 
-image = im2double(imread('segtest3.jpg'));
+image = im2double(imread('segtest1.jpg'));
 figure
 imshow(image);
 imageSize = size(image);
-H = imageSize(1);
-W = imageSize(2);
-N = H*W;
 
 [pointsX,pointsY] = ginput(2);
 pointsX = floor(pointsX);
 pointsY = floor(pointsY);
 radius=1;
 
-responses = zeros(H,W,8);
-[responses(:,:,1),responses(:,:,2),responses(:,:,3),...
-    responses(:,:,4),responses(:,:,5),responses(:,:,6),...
-    responses(:,:,7),responses(:,:,8)] = ...
-    get8FilterImages(rgb2gray(image));
-
-responses = abs(responses);
-foregroundVicinity = responses(pointsY(1)-radius:pointsY(1)+radius,...
+foregroundVicinity = image(pointsY(1)-radius:pointsY(1)+radius,...
     pointsX(1)-radius:pointsX(1)+radius,:);
-foreSize = size(foregroundVicinity);
-foreVic = reshape(foregroundVicinity,[foreSize(1)*foreSize(2) foreSize(3)]);
-foreColor = mean(foreVic);
+foreVicRed = foregroundVicinity(:,:,1);
+foreVicGreen = foregroundVicinity(:,:,2);
+foreVicBlue = foregroundVicinity(:,:,3);
+foreColor = [mean(foreVicRed(:)) mean(foreVicGreen(:)) mean(foreVicBlue(:))];
 
-backgroundVicinity = responses(pointsY(2)-radius:pointsY(2)+radius,...
+backgroundVicinity = image(pointsY(2)-radius:pointsY(2)+radius,...
     pointsX(2)-radius:pointsX(2)+radius,:);
-backSize = size(backgroundVicinity);
-backVic = reshape(backgroundVicinity,[backSize(1)*backSize(2) backSize(3)]);
-backColor = mean(backVic);
+backVicRed = backgroundVicinity(:,:,1);
+backVicGreen = backgroundVicinity(:,:,2);
+backVicBlue = backgroundVicinity(:,:,3);
+backColor = [mean(backVicRed(:)) mean(backVicGreen(:)) mean(backVicBlue(:))];
 
+H = imageSize(1);
+W = imageSize(2);
+N = H*W;
 pixelData = reshape(image,[N 3]);
-pixelResponseInfo = reshape(responses,[N 8]);
-
 backColorMatrix = repmat(backColor,[N 1]);
 foreColorMatrix = repmat(foreColor,[N 1]);
-foreRGBdist = sqrt(sum(abs(foreColorMatrix-pixelResponseInfo),2));
-backRGBdist = sqrt(sum(abs(backColorMatrix-pixelResponseInfo),2));
+foreRGBdist = sqrt(sum(abs(foreColorMatrix-pixelData),2));
+backRGBdist = sqrt(sum(abs(backColorMatrix-pixelData),2));
 
 lambda = 1;
 segclass = zeros(N,1);
@@ -81,3 +75,5 @@ title('Original image');
 subplot(212);
 imagesc(reshape(labels,[H W]));
 title('Min-cut');
+
+%}

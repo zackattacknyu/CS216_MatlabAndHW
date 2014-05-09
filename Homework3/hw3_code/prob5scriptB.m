@@ -1,4 +1,5 @@
 %script for problem 5, Part B
+%this needs to be run from a spot with GCMex compiled
 
 image = im2double(imread('segtest3.jpg'));
 figure
