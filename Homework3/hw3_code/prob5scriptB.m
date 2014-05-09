@@ -1,7 +1,6 @@
 %script for problem 5, Part B
-%this needs to be run from a spot with GCMex compiled
 
-image = im2double(imread('segtest3.jpg'));
+image = im2double(imread('segtest2.jpg'));
 figure
 imshow(image);
 imageSize = size(image);
@@ -41,7 +40,7 @@ foreColorMatrix = repmat(foreColor,[N 1]);
 foreRGBdist = sqrt(sum(abs(foreColorMatrix-pixelResponseInfo),2));
 backRGBdist = sqrt(sum(abs(backColorMatrix-pixelResponseInfo),2));
 
-lambda = 1;
+lambda = 0.001;
 segclass = zeros(N,1);
 pairwise = sparse(N,N);
 
@@ -76,9 +75,13 @@ end
 figure
 
 subplot(211);
-imagesc(image);
+hold on
+imshow(image);
+plot(pointsX,pointsY,'x','LineWidth',2);
 title('Original image');
+hold off
 
 subplot(212);
 imagesc(reshape(labels,[H W]));
 title('Min-cut');
+

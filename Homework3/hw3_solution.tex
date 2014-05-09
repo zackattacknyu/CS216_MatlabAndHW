@@ -296,7 +296,7 @@ For segtest2.jpg, the results were really nice. The dragon ended up in the foreg
 \caption{Min cut results for segtest2.jpg}
 \end{figure}
 
-For segtest1.jpg, the results were worse. I tried to make the maroon ball the foreground and the rest the background but it did not quite divide it that way. I made $\lambda=20$ so that there was it was more likely to select similarity to the foreground and background pixel rather than similarity between neighbors. It ended up capturing the maroon ball as the foreground but other objects were included as well as part of the background gradient. The background included part of the background gradient as well as other things too. Here are the results.
+For segtest1.jpg, the results were worse. I tried to make the maroon ball the foreground and the rest the background but it did not quite divide it that way. I made $\lambda=4$ so that there was it was more likely to select similarity between neighbors to try and offset the effects of similarity in colors between foreground and background objects. It ended up capturing the maroon ball as the foreground but other objects were included as well as part of the background gradient. The background included part of the background gradient as well as other things too. This was all likely due to color similarity between neighboring foreground and background objects. Here are the results.
 
 \begin{figure}[H]
 \centering
@@ -304,7 +304,7 @@ For segtest1.jpg, the results were worse. I tried to make the maroon ball the fo
 \caption{Min cut results for segtest1.jpg}
 \end{figure}
 
-I decided to use a picture of a hockey puck as an interesting example. A hockey puck has a relatively uniform color so I wanted to see if it's shape would come out when using the min cut algorithm. As it turns out, it worked very well. It did not need to tune the $\lambda$ parameter for this case. 
+I decided to use a picture of a hockey puck as an interesting example. A hockey puck has a relatively uniform color so I wanted to see if it's shape would come out when using the min cut algorithm. As it turns out, the shape did appear very nicely. It did not need to tune the $\lambda$ parameter for this case. 
 
 \begin{figure}[H]
 \centering
@@ -314,15 +314,15 @@ I decided to use a picture of a hockey puck as an interesting example. A hockey 
 
 \subsection*{Part B}
 
-With this problem, I decided to use the filterbank image data for the unary matrix. The filterbank output showed the edges very well so if the background and foreground are defined by whether there are a lot of edges or color changes, then this approach works very nice. For segtest2.jpg, here was the filter bank output. 
+With this problem, I decided to use the filterbank image data for the unary matrix. The filterbank output showed the edges very well so if the background and foreground are defined by whether there are a lot of edges or color changes, then this approach can be better than using just the colors. For segtest2.jpg, here was the filter bank output. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=6in]{prob5plotB_1_filter.jpg}
+\includegraphics[width=7in]{prob5plotB_1_filter.jpg}
 \caption{Filterbank for segtest2.jpg}
 \end{figure}
 
-I used $\lambda=0.001$ and attempted to detect the spiral using the filterbank image data. It worked somewhat well and detected the spiral as well as the outline of the dragon as the foreground and then the rest as the background. It likely detected the outline of the dragon due to the fact that there were edges there too so the filter bank data was similar and $\lambda$ is skewed to favor that. Here was the result:
+I used $\lambda=0.001$ to make it more likely to detect similarity in filter bank data and attempted to detect the spiral using the filterbank image data. It worked somewhat well and detected the spiral as well as the outline of the dragon as the foreground and then the rest as the background. It likely detected the outline of the dragon due to the fact that there were edges there too so the filter bank data was similar. Here was the result:
 
 \begin{figure}[H]
 \centering
@@ -334,7 +334,7 @@ For segtest1.jpg, I took advantage of the fact that the filterbank showed edges 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=6in]{prob5plotB_2_filter.jpg}
+\includegraphics[width=7in]{prob5plotB_2_filter.jpg}
 \caption{Filterbank for segtest1.jpg}
 \end{figure}
 
@@ -350,7 +350,7 @@ With the hockey puck image, using the filter bank was not advantageous because t
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=6in]{prob5plotB_3_filter.jpg}
+\includegraphics[width=7in]{prob5plotB_3_filter.jpg}
 \caption{Filterbank for segtest3.jpg}
 \end{figure}
 

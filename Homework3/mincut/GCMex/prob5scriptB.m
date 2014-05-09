@@ -75,9 +75,13 @@ end
 figure
 
 subplot(211);
-imagesc(image);
+hold on
+imshow(image);
+plot(pointsX,pointsY,'x','LineWidth',2);
 title('Original image');
+hold off
 
 subplot(212);
 imagesc(reshape(labels,[H W]));
 title('Min-cut');
+

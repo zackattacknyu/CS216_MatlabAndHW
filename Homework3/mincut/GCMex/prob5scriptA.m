@@ -33,7 +33,7 @@ foreColorMatrix = repmat(foreColor,[N 1]);
 foreRGBdist = sqrt(sum(abs(foreColorMatrix-pixelData),2));
 backRGBdist = sqrt(sum(abs(backColorMatrix-pixelData),2));
 
-lambda = 20;
+lambda = 4;
 segclass = zeros(N,1);
 pairwise = sparse(N,N);
 
@@ -68,11 +68,14 @@ end
 figure
 
 subplot(211);
-imagesc(image);
+hold on
+imshow(image);
+plot(pointsX,pointsY,'x','LineWidth',2);
 title('Original image');
+hold off
 
 subplot(212);
 imagesc(reshape(labels,[H W]));
 title('Min-cut');
 
-%}
+
