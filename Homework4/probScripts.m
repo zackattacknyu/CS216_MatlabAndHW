@@ -1,3 +1,4 @@
+%% Problem1script
 imname = 'test1.jpg';
 imageData = im2double(rgb2gray(imread(imname)));
 
@@ -30,7 +31,19 @@ for i = 0:numBlocksVert-1
        bins = (-pi/2+pi/18):pi/9:(pi/2-pi/18);
        binInfo = hist(orientImage(:),bins);
        
-       ohist(i+1,j+1,:) = binInfo;
+       ohist(i+1,j+1,:) = binInfo/64;
    end
 end
+
+threshold = 0.1*max(max(max(ohist)));
+%threshold = 0.1*max(max(imageData));
+edgeLoc = double(ohist>threshold);
+
+for k=1:9
+    %figure
+    %imshow(edgeLoc(:,:,k));
+end
+
+%% Problem2script
+threshold=2;
 
