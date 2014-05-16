@@ -11,7 +11,7 @@ horizSize = imageDataSize(2);
 numBlocksHoriz = floor(horizSize/8);
 numBlocksVert = floor(vertSize/8);
 
-newImageBlock = zeros(8,8,numBlocksVert,numBlocksHoriz);
+ohist = zeros(numBlocksVert,numBlocksHoriz,9);
 
 for i = 0:numBlocksVert-1
    for j = 0:numBlocksHoriz-1
@@ -22,14 +22,15 @@ for i = 0:numBlocksVert-1
        
        imageDataBlock = imageData(rowStart:rowEnd,colStart:colEnd);
        
-       newImageBlock(:,:,i+1,j+1) = imageDataBlock;
+       horizDerivImage = conv2(imageDataBlock,horizDeriv,'same');
+       vertDerivImage = conv2(imageDataBlock,vertDeriv,'same');
+       complexImage = horizDerivImage + vertDerivImage*sqrt(-1);
+       orientImage = angle(complexImage);
+
+       bins = (-pi/2+pi/18):pi/9:(pi/2-pi/18);
+       binInfo = hist(orientImage(:),bins);
+       
+       ohist(i+1,j+1,:) = binInfo;
    end
 end
 
-horizDerivImage = conv2(imageDataBlock,horizDeriv,'same');
-vertDerivImage = conv2(imageDataBlock,vertDeriv,'same');
-complexImage = horizDerivImage + vertDerivImage*sqrt(-1);
-orientImage = angle(complexImage);
-
-bins = (-pi/2+pi/18):pi/9:(pi/2-pi/18);
-binInfo = hist(orientImage(:),bins);
