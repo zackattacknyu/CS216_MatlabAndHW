@@ -41,7 +41,8 @@ x = ones(1,ndet)*(-100);
 y = ones(1,ndet)*(-100);
 score = ones(1,ndet)*(-100);
 
-minDistSquared = 100;
+numBlocksMin = 3;
+minDistSquared = (numBlocksMin*8)^2;
 
 while ((detcount <= ndet) && (i <= length(ind)))
   % convert ind(i) back to (i,j) values to get coordinates of the block
