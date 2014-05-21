@@ -37,9 +37,9 @@ end
 i = 1;
 detcount = 0;
 addedBlocks = zeros(height,width);
-x = ones(ndet)*(-100);
-y = ones(ndet)*(-100);
-score = ones(ndet)*(-100);
+x = ones(1,ndet)*(-100);
+y = ones(1,ndet)*(-100);
+score = ones(1,ndet)*(-100);
 
 minDistSquared = 100;
 
