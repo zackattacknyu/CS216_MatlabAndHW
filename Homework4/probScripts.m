@@ -77,6 +77,17 @@ Itrain = im2double(rgb2gray(imread('test2.jpg')));
 nclick = 1;
 figure(1); clf;
 imshow(Itrain);
+
+rect = getrect(figure(1));
+xmin = rect(1);
+ymin = rect(2);
+width = rect(3);
+height = rect(4);
+patch = Itrain(ymin:(ymin+height),xmin:(xmin+width));
+figure
+imshow(patch);
+
+%{
 [x,y] = ginput(nclick); %get nclicks from the user
 
 %compute 8x8 block in which the user clicked
@@ -120,5 +131,7 @@ for i = 1:ndet
   h = rectangle('Position',[x(i)-64 y(i)-64 128 128],'EdgeColor',[(i/ndet) ((ndet-i)/ndet)  0],'LineWidth',3,'Curvature',[0.3 0.3]); 
   hold off;
 end
+
+%}
 
 
