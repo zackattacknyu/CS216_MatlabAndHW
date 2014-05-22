@@ -70,7 +70,7 @@ end
 
 %% Problem 4 Script
 % load a training example image
-Itrain = im2double(rgb2gray(imread('test2.jpg')));
+Itrain = im2double(rgb2gray(imread('test3.jpg')));
 
 %have the user click on some training examples.  
 % If there is more than 1 example in the training image (e.g. faces), you could set nclicks higher here and average together
@@ -79,21 +79,37 @@ figure(1); clf;
 imshow(Itrain);
 numRects = 3;
 patches = cell(1,3);
+widthValues = zeros(1,numRects);
+heightValues = zeros(1,numRects);
 
 for num = 1:numRects
     rect = getrect(figure(1));
-    xmin = rect(1);
-    ymin = rect(2);
-    width = rect(3);
-    height = rect(4);
+    xmin = floor(rect(1));
+    ymin = floor(rect(2));
+    width = floor(rect(3));
+    height = floor(rect(4));
     patch = Itrain(ymin:(ymin+height),xmin:(xmin+width));
+    widthValues(num) = width;
+    heightValues(num) = height;
     patches{num} = patch;
 end
 
+aspectRatioValues = widthValues./heightValues;
+resizeHeight = mean(heightValues);
+avgAspectRatio = mean(aspectRatioValues);
+resizeWidth = resizeHeight*avgAspectRatio;
+resizeHeight = floor(resizeHeight/8)*8;
+resizeWidth = floor(resizeWidth/8)*8;
+
+resizedPatches = zeros(resizeHeight,resizeWidth,numRects);
+
 for num = 1:numRects
    figure
-   imshow(patches{num})
+   resizedPatch = imresize(patches{num},[resizeHeight resizeWidth]);
+   resizedPatches(:,:,num) = resizedPatch;
+   imshow(resizedPatch)
 end
+
 
 
 %{
@@ -124,7 +140,7 @@ template = template/nclick;
 %
 % load a test image
 %
-Itest= im2double(rgb2gray(imread('test3.jpg')));
+Itest= im2double(rgb2gray(imread('test2.jpg')));
 
 
 % find top 5 detections in Itest
