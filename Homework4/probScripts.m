@@ -78,7 +78,7 @@ nclick = 1;
 figure(1); clf;
 imshow(Itrain);
 numRects = 3;
-patches = cell(1,3);
+patches = cell(1,numRects);
 widthValues = zeros(1,numRects);
 heightValues = zeros(1,numRects);
 
