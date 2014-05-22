@@ -77,7 +77,8 @@ Itrain = im2double(rgb2gray(imread('test3.jpg')));
 nclick = 1;
 figure(1); clf;
 imshow(Itrain);
-numRects = 3;
+numRects = 8;
+numPosRects = 3; %number of initial rectangles which will be used for positive template
 patches = cell(1,numRects);
 widthValues = zeros(1,numRects);
 heightValues = zeros(1,numRects);
@@ -115,12 +116,19 @@ end
 % compute the hog features
 %f = hog(Itrain);
 
-template = zeros(numHeightBlocks,numWidthBlocks,9);
-for i = 1:numRects
+negTemplate = zeros(numHeightBlocks,numWidthBlocks,9);
+posTemplate = zeros(numHeightBlocks,numWidthBlocks,9);
+for i = 1:numPosRects
    f = hog(resizedPatches(:,:,i)); 
-   template = template + f;
+   posTemplate = posTemplate + f;
 end
-template = template/numRects;
+for i = numPosRects+1:numRects
+   f = hog(resizedPatches(:,:,i)); 
+   negTemplate = negTemplate + f;
+end
+posTemplate = posTemplate/numPosRects;
+negTemplate = negTemplate/(numRects-numPosRects);
+template = posTemplate-negTemplate;
 
 %
 % load a test image
