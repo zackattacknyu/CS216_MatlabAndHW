@@ -77,15 +77,24 @@ Itrain = im2double(rgb2gray(imread('test2.jpg')));
 nclick = 1;
 figure(1); clf;
 imshow(Itrain);
+numRects = 3;
+patches = cell(1,3);
 
-rect = getrect(figure(1));
-xmin = rect(1);
-ymin = rect(2);
-width = rect(3);
-height = rect(4);
-patch = Itrain(ymin:(ymin+height),xmin:(xmin+width));
-figure
-imshow(patch);
+for num = 1:numRects
+    rect = getrect(figure(1));
+    xmin = rect(1);
+    ymin = rect(2);
+    width = rect(3);
+    height = rect(4);
+    patch = Itrain(ymin:(ymin+height),xmin:(xmin+width));
+    patches{num} = patch;
+end
+
+for num = 1:numRects
+   figure
+   imshow(patches{num})
+end
+
 
 %{
 [x,y] = ginput(nclick); %get nclicks from the user
