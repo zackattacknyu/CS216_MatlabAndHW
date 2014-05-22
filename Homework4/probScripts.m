@@ -98,8 +98,10 @@ aspectRatioValues = widthValues./heightValues;
 resizeHeight = mean(heightValues);
 avgAspectRatio = mean(aspectRatioValues);
 resizeWidth = resizeHeight*avgAspectRatio;
-resizeHeight = floor(resizeHeight/8)*8;
-resizeWidth = floor(resizeWidth/8)*8;
+numHeightBlocks = floor(resizeHeight/8);
+numWidthBlocks = floor(resizeWidth/8);
+resizeHeight = numHeightBlocks*8;
+resizeWidth = numWidthBlocks*8;
 
 resizedPatches = zeros(resizeHeight,resizeWidth,numRects);
 
@@ -110,38 +112,20 @@ for num = 1:numRects
    imshow(resizedPatch)
 end
 
-
-
-%{
-[x,y] = ginput(nclick); %get nclicks from the user
-
-%compute 8x8 block in which the user clicked
-blockx = round(x/8);
-blocky = round(y/8); 
-
-%visualize image patches that the user clicked on
-figure(2); clf;
-for i = 1:nclick
-  patch = Itrain(8*blocky(i)+(-63:64),8*blockx(i)+(-63:64));
-  figure(2); subplot(3,2,i); imshow(patch);
-end
-
 % compute the hog features
-f = hog(Itrain);
+%f = hog(Itrain);
 
-% compute the average template for the user clicks
-template = zeros(16,16,9);
-for i = 1:nclick
-  template = template + f(blocky(i)+(-7:8),blockx(i)+(-7:8),:); 
+template = zeros(numHeightBlocks,numWidthBlocks,9);
+for i = 1:numRects
+   f = hog(resizedPatches(:,:,i)); 
+   template = template + f;
 end
-template = template/nclick;
-
+template = template/numRects;
 
 %
 % load a test image
 %
-Itest= im2double(rgb2gray(imread('test2.jpg')));
-
+Itest= im2double(rgb2gray(imread('test4.jpg')));
 
 % find top 5 detections in Itest
 ndet = 5;
@@ -157,6 +141,5 @@ for i = 1:ndet
   hold off;
 end
 
-%}
 
 
