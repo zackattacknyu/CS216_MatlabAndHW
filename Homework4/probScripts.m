@@ -269,4 +269,3 @@ for i = 1:ndet
 end
 
 
-
