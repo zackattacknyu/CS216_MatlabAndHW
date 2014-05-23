@@ -191,6 +191,11 @@ I used 0.7 as a scale factor. The best results ended up being at the first level
 
 These are in the zip file containing the code inside a folder entitled \"prob4negTrain\". 
 
+\newpage
+
+\section*{Comparison to simple cross-correlation}
+
+When we want to detect an object, we really care about the shape of the object. In homework 2, when we were doing correlation of the image with the template, we were only correlating where the pixel values matched. Pixel values by themselves only tell us what should be displayed at a particular point and not necessarily the shape. There could also be noisy pixels that could easily skew the results. With our correlation here we are using the histogram of gradients and the gradients tell us information about the shape of the objects in an image. Because of this, we are correlating on the shape information here and not just pixel values thus we get better results. 
 
 \end{document}
 
