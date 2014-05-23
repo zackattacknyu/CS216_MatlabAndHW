@@ -100,45 +100,16 @@ for i = 1:ndet
 end
 
 %% Problem 4 Script Picking Images
-% this part of the script lets a user pick patches of an 
-%       image. The code below this code is what will be used
-%       for the final result and it will use already picked patches
+% this is the script used when you want
+%       to pick the images. The script used
+%       for the final result is the next one.
 
 % load a training example image
 Itrain = im2double(rgb2gray(imread('test3.jpg')));
 
 %have the user click on some training examples.  
-% If there is more than 1 example in the training image (e.g. faces), you could set nclicks higher here and average together
-nclick = 1;
-figure(1); clf;
-imshow(Itrain);
-numRects = 8;
-numPosRects = 3; %number of initial rectangles which will be used for positive template
-patches = cell(1,numRects);
-widthValues = zeros(1,numRects);
-heightValues = zeros(1,numRects);
-
-for num = 1:numRects
-    rect = getrect(figure(1));
-    xmin = floor(rect(1));
-    ymin = floor(rect(2));
-    width = floor(rect(3));
-    height = floor(rect(4));
-    patch = Itrain(ymin:(ymin+height),xmin:(xmin+width));
-    widthValues(num) = width;
-    heightValues(num) = height;
-    patches{num} = patch;
-end
-
-
-%% Problem 4 Script Actual Run
-
-% load a training example image
-Itrain = im2double(rgb2gray(imread('test3.jpg')));
-
-%have the user click on some training examples.  
-% If there is more than 1 example in the training image (e.g. faces), you could set nclicks higher here and average together
-nclick = 1;
+% If there is more than 1 example in the training image (e.g. faces), 
+%   you could set nclicks higher here and average together
 figure(1); clf;
 imshow(Itrain);
 numRects = 8;
@@ -192,6 +163,60 @@ for i = numPosRects+1:numRects
 end
 posTemplate = posTemplate/numPosRects;
 negTemplate = negTemplate/(numRects-numPosRects);
+template = posTemplate-negTemplate;
+
+%
+% load a test image
+%
+Itest= im2double(rgb2gray(imread('test4.jpg')));
+
+% find top 5 detections in Itest
+ndet = 5;
+[x,y,score] = detect(Itest,template,ndet);
+
+%display top ndet detections
+figure(3); clf; imshow(Itest);
+for i = 1:ndet
+  % draw a rectangle.  use color to encode confidence of detection
+  %  top scoring are green, fading to red
+  hold on; 
+  h = rectangle('Position',[x(i)-64 y(i)-64 128 128],'EdgeColor',[(i/ndet) ((ndet-i)/ndet)  0],'LineWidth',3,'Curvature',[0.3 0.3]); 
+  hold off;
+end
+
+
+%% Problem 4 Script Actual Run
+
+% load a training example image
+
+resizeHeight = 168;
+resizeWidth = 168;
+numHeightBlocks = floor(resizeHeight/8);
+numWidthBlocks = floor(resizeWidth/8);
+numPosRects = 5;
+
+posPatches = zeros(resizeHeight,resizeWidth,numPosRects);
+
+posPatches(:,:,1) = im2double(rgb2gray(imread('prob4posTrain/pedSign2Train.jpg')));
+posPatches(:,:,2) = im2double(rgb2gray(imread('prob4posTrain/test3train.jpg')));
+posPatches(:,:,3) = im2double(rgb2gray(imread('prob4posTrain/test4train.jpg')));
+posPatches(:,:,4) = im2double(rgb2gray(imread('prob4posTrain/test5train.jpg')));
+posPatches(:,:,5) = im2double(rgb2gray(imread('prob4posTrain/test6train.jpg')));
+
+negTemplate = zeros(numHeightBlocks,numWidthBlocks,9);
+posTemplate = zeros(numHeightBlocks,numWidthBlocks,9);
+for i = 1:numPosRects
+   f = hog(posPatches(:,:,i)); 
+   posTemplate = posTemplate + f;
+end
+%{
+for i = numPosRects+1:numRects
+   f = hog(resizedPatches(:,:,i)); 
+   negTemplate = negTemplate + f;
+end
+negTemplate = negTemplate/(numRects-numPosRects);
+%}
+posTemplate = posTemplate/numPosRects;
 template = posTemplate-negTemplate;
 
 %
