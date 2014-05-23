@@ -184,6 +184,27 @@ for i = 1:ndet
   hold off;
 end
 
+%% Script for getting negative images
+% This gets random image patches from the test images, which were
+%   later checked to make sure they don't contain the pedestrian sign
+%   Used to gather images for problem 4
+
+Itrain = im2double(rgb2gray(imread('test0.jpg')));
+imsize = size(Itrain);
+height = imsize(1)-168;
+width = imsize(2)-168;
+
+numPics = 100;
+randXvals = floor(rand(1,numPics)*width) + 84;
+randYvals = floor(rand(1,numPics)*height) + 84;
+for picNum = 1:numPics
+   imname = strcat('prob4negTrain/negPatchX_',num2str(picNum),'.jpg'); 
+   patch = Itrain(randYvals(picNum)-84:randYvals(picNum)+84,...
+       randXvals(picNum)-84:randXvals(picNum)+84);
+   imwrite(patch,imname,'JPEG');
+end
+
+
 
 %% Problem 4 Script Actual Run
 
