@@ -99,7 +99,40 @@ for i = 1:ndet
   hold off;
 end
 
-%% Problem 4 Script
+%% Problem 4 Script Picking Images
+% this part of the script lets a user pick patches of an 
+%       image. The code below this code is what will be used
+%       for the final result and it will use already picked patches
+
+% load a training example image
+Itrain = im2double(rgb2gray(imread('test3.jpg')));
+
+%have the user click on some training examples.  
+% If there is more than 1 example in the training image (e.g. faces), you could set nclicks higher here and average together
+nclick = 1;
+figure(1); clf;
+imshow(Itrain);
+numRects = 8;
+numPosRects = 3; %number of initial rectangles which will be used for positive template
+patches = cell(1,numRects);
+widthValues = zeros(1,numRects);
+heightValues = zeros(1,numRects);
+
+for num = 1:numRects
+    rect = getrect(figure(1));
+    xmin = floor(rect(1));
+    ymin = floor(rect(2));
+    width = floor(rect(3));
+    height = floor(rect(4));
+    patch = Itrain(ymin:(ymin+height),xmin:(xmin+width));
+    widthValues(num) = width;
+    heightValues(num) = height;
+    patches{num} = patch;
+end
+
+
+%% Problem 4 Script Actual Run
+
 % load a training example image
 Itrain = im2double(rgb2gray(imread('test3.jpg')));
 
