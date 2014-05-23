@@ -44,8 +44,9 @@ Itrain = im2double(imread('pedSignTemplate.jpg'));
 
 template = hog(Itrain);
 currentTest= im2double(rgb2gray(imread('test3.jpg')));
-
+resizeFactor = 0.7;
 properTest = size(Itrain)<size(currentTest);
+blockWidth = 128;
 while(properTest(1) && properTest(2))
     
     % find top 5 detections in Itest
@@ -60,11 +61,14 @@ while(properTest(1) && properTest(2))
       % draw a rectangle.  use color to encode confidence of detection
       %  top scoring are green, fading to red
       hold on; 
-      h = rectangle('Position',[x(i)-64 y(i)-64 128 128],'EdgeColor',[(i/ndet) ((ndet-i)/ndet)  0],'LineWidth',3,'Curvature',[0.3 0.3]); 
+      h = rectangle('Position',[x(i)-(blockWidth/2) y(i)-(blockWidth/2) blockWidth blockWidth],...
+          'EdgeColor',[(i/ndet) ((ndet-i)/ndet)  0],...
+          'LineWidth',3,'Curvature',[0.3 0.3]); 
       hold off;
     end
     
-    currentTest = imresize(currentTest,0.7);
+    blockWidth = blockWidth*resizeFactor;
+    currentTest = imresize(currentTest,resizeFactor);
     properTest = size(Itrain)<size(currentTest);
 end
 
