@@ -21,7 +21,7 @@ template = hog(Itrain);
 %
 % load a test image
 %
-Itest= im2double(rgb2gray(imread('test1.jpg')));
+Itest= im2double(rgb2gray(imread('test4.jpg')));
 
 
 % find top 5 detections in Itest
@@ -50,6 +50,7 @@ properTest = size(Itrain)<size(currentTest);
 blockWidth = 128;
 level = 0;
 xVals = []; yVals = []; scoreVals = [];
+levelVals = [];
 while(properTest(1) && properTest(2))
     
     % find top 5 detections in Itest
@@ -60,6 +61,8 @@ while(properTest(1) && properTest(2))
     xVals = [xVals newX];
     yVals = [yVals newY];
     scoreVals = [scoreVals score];
+    levelVal = (x.*0) + level;
+    levelVals = [levelVals levelVal];
 
     %display top ndet detections
     %figure(3); clf; 
@@ -84,12 +87,16 @@ end
 [val ind] = sort(score,'descend');
 xFinal = xVals(ind);
 yFinal = yVals(ind);
+levelFinal = levelVals(ind);
 
 %display top ndet detections
 figure
 imshow(Itest);
 blockWidth = 128;
 for i = 1:ndet
+    
+    blockWidth = 128*(resizeFactor^levelFinal(i));
+    
   % draw a rectangle.  use color to encode confidence of detection
   %  top scoring are green, fading to red
   hold on; 
