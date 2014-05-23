@@ -40,10 +40,10 @@ end
 
 %% Problem 3 Script
 
-Itrain = im2double(rgb2gray(imread('test4train.jpg')));
+Itrain = im2double(rgb2gray(imread('test1train.jpg')));
 
 template = hog(Itrain);
-Itest = im2double(rgb2gray(imread('test4.jpg')));
+Itest = im2double(rgb2gray(imread('test1.jpg')));
 currentTest= Itest;
 resizeFactor = 0.7;
 properTest = size(Itrain)<size(currentTest);
