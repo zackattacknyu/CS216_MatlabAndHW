@@ -43,15 +43,23 @@ end
 Itrain = im2double(imread('pedSignTemplate.jpg'));
 
 template = hog(Itrain);
-currentTest= im2double(rgb2gray(imread('test3.jpg')));
+Itest = im2double(rgb2gray(imread('test3.jpg')));
+currentTest= Itest;
 resizeFactor = 0.7;
 properTest = size(Itrain)<size(currentTest);
 blockWidth = 128;
+level = 0;
+xVals = []; yVals = []; scoreVals = [];
 while(properTest(1) && properTest(2))
     
     % find top 5 detections in Itest
     ndet = 5;
     [x,y,score] = detect(currentTest,template,ndet);
+    newX = x./(resizeFactor^level);
+    newY = y./(resizeFactor^level);
+    xVals = [xVals newX];
+    yVals = [yVals newY];
+    scoreVals = [scoreVals score];
 
     %display top ndet detections
     %figure(3); clf; 
@@ -70,6 +78,25 @@ while(properTest(1) && properTest(2))
     blockWidth = blockWidth*resizeFactor;
     currentTest = imresize(currentTest,resizeFactor);
     properTest = size(Itrain)<size(currentTest);
+    level = level + 1;
+end
+
+[val ind] = sort(score,'descend');
+xFinal = xVals(ind);
+yFinal = yVals(ind);
+
+%display top ndet detections
+figure
+imshow(Itest);
+blockWidth = 128;
+for i = 1:ndet
+  % draw a rectangle.  use color to encode confidence of detection
+  %  top scoring are green, fading to red
+  hold on; 
+  h = rectangle('Position',[xFinal(i)-(blockWidth/2) yFinal(i)-(blockWidth/2) blockWidth blockWidth],...
+      'EdgeColor',[(i/ndet) ((ndet-i)/ndet)  0],...
+      'LineWidth',3,'Curvature',[0.3 0.3]); 
+  hold off;
 end
 
 %% Problem 4 Script
