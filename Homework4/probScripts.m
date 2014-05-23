@@ -21,7 +21,7 @@ template = hog(Itrain);
 %
 % load a test image
 %
-Itest= im2double(rgb2gray(imread('test3.jpg')));
+Itest= im2double(rgb2gray(imread('test1.jpg')));
 
 
 % find top 5 detections in Itest
@@ -40,10 +40,10 @@ end
 
 %% Problem 3 Script
 
-Itrain = im2double(imread('pedSignTemplate.jpg'));
+Itrain = im2double(rgb2gray(imread('pedSign2Train.jpg')));
 
 template = hog(Itrain);
-Itest = im2double(rgb2gray(imread('test3.jpg')));
+Itest = im2double(rgb2gray(imread('test1.jpg')));
 currentTest= Itest;
 resizeFactor = 0.7;
 properTest = size(Itrain)<size(currentTest);
@@ -224,26 +224,35 @@ posPatches(:,:,3) = im2double(rgb2gray(imread('prob4posTrain/test4train.jpg')));
 posPatches(:,:,4) = im2double(rgb2gray(imread('prob4posTrain/test5train.jpg')));
 posPatches(:,:,5) = im2double(rgb2gray(imread('prob4posTrain/test6train.jpg')));
 
-negTemplate = zeros(numHeightBlocks,numWidthBlocks,9);
 posTemplate = zeros(numHeightBlocks,numWidthBlocks,9);
 for i = 1:numPosRects
    f = hog(posPatches(:,:,i)); 
    posTemplate = posTemplate + f;
 end
-%{
-for i = numPosRects+1:numRects
-   f = hog(resizedPatches(:,:,i)); 
-   negTemplate = negTemplate + f;
-end
-negTemplate = negTemplate/(numRects-numPosRects);
-%}
 posTemplate = posTemplate/numPosRects;
+
+negTemplate = zeros(numHeightBlocks,numWidthBlocks,9);
+
+%comment out this block to get one with just 5 positive templates
+files = dir('prob4negTrain');
+filesSize = size(files);
+numFiles = filesSize(1);
+images = zeros(168,168,100);
+for index = 3:numFiles
+   imname = strcat('prob4negTrain/',files(index).name);
+   image = im2double(imread(imname));
+   imageToUse = image(1:168,1:168);
+   f = hog(imageToUse);
+   negTemplate = negTemplate+f;
+end
+negTemplate = negTemplate/(numFiles-2);
+
 template = posTemplate-negTemplate;
 
 %
 % load a test image
 %
-Itest= im2double(rgb2gray(imread('test4.jpg')));
+Itest= im2double(rgb2gray(imread('test6.jpg')));
 
 % find top 5 detections in Itest
 ndet = 5;
